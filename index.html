@@ -1,0 +1,3566 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark" data-system="isac" data-fontsize="normal">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHD // 国土战略局机密档案：全境封锁2 全派系、人物与编年史大百科</title>
+  <style>
+    /* ==========================================================================
+       SHD / ISAC TACTICAL DESIGN SYSTEM & HIGH-READABILITY EDITORIAL TYPOGRAPHY
+       ========================================================================== */
+    :root {
+      /* SHD & Faction Core Palette */
+      --shd-orange: #ff6b00;
+      --shd-orange-glow: rgba(255, 107, 0, 0.28);
+      --shd-orange-soft: rgba(255, 107, 0, 0.12);
+      --anna-red: #ff2a3c;
+      --anna-red-glow: rgba(255, 42, 60, 0.28);
+      --isac-cyan: #00e5ff;
+      --hunter-teal: #14b8a6;
+      --hyena-green: #10b981;
+      --outcast-yellow: #f59e0b;
+      --truesons-blue: #3b82f6;
+      --blacktusk-gold: #eab308;
+      --cleaner-purple: #a855f7;
+      --riker-crimson: #ef4444;
+      --peacekeeper-sky: #38bdf8;
+
+      /* Active System Accent (Switches between ISAC Orange & ANNA Red) */
+      --sys-accent: var(--shd-orange);
+      --sys-accent-glow: var(--shd-orange-glow);
+      --sys-accent-soft: var(--shd-orange-soft);
+
+      /* Dark Tactical Terminal Theme (Default) */
+      --bg-base: #0a0d12;
+      --bg-surface: #11161f;
+      --bg-card: #161c28;
+      --bg-card-hover: #1b2332;
+      --bg-elevated: #1e2636;
+      --bg-glass: rgba(17, 22, 31, 0.88);
+      --text-primary: #ecf0f6;
+      --text-secondary: #b8c4d4;
+      --text-muted: #7e8da2;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --grid-line: rgba(255, 107, 0, 0.035);
+      --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.65);
+
+      /* Typography Scale */
+      --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "JetBrains Mono", "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      --base-font-size: 16px;
+      --line-height-body: 1.85;
+    }
+
+    /* High-Readability Daylight / Briefing Paper Mode */
+    html[data-theme="light"] {
+      --bg-base: #f4f5f7;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f9fafb;
+      --bg-elevated: #eef1f5;
+      --bg-glass: rgba(255, 255, 255, 0.92);
+      --text-primary: #141923;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --border-subtle: rgba(15, 23, 42, 0.1);
+      --border-strong: rgba(15, 23, 42, 0.2);
+      --grid-line: rgba(15, 23, 42, 0.03);
+      --shadow-card: 0 6px 20px -6px rgba(15, 23, 42, 0.08);
+      --shd-orange: #e05600;
+      --shd-orange-soft: rgba(224, 86, 0, 0.1);
+    }
+
+    /* ANNA Rogue Network Override Mode */
+    html[data-system="anna"] {
+      --sys-accent: var(--anna-red);
+      --sys-accent-glow: var(--anna-red-glow);
+      --sys-accent-soft: rgba(255, 42, 60, 0.12);
+      --grid-line: rgba(255, 42, 60, 0.035);
+    }
+
+    /* Font Size Presets for Maximum Accessibility */
+    html[data-fontsize="normal"] { --base-font-size: 16px; }
+    html[data-fontsize="comfortable"] { --base-font-size: 17.5px; }
+    html[data-fontsize="large"] { --base-font-size: 19px; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: var(--base-font-size);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      max-width: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-base);
+      background-image:
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 36px 36px;
+      color: var(--text-primary);
+      line-height: var(--line-height-body);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+      position: relative;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-base);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--sys-accent);
+    }
+
+    /* ==========================================================================
+       TOP TACTICAL HUD BAR (STICKY)
+       ========================================================================== */
+    .shd-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      width: 100%;
+      background: var(--bg-glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-strong);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .shd-topbar::before {
+      content: "";
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, var(--sys-accent), #ff9e00, var(--isac-cyan), var(--sys-accent));
+      background-size: 200% 100%;
+      animation: shdScanline 8s linear infinite;
+    }
+
+    @keyframes shdScanline {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .topbar-inner {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 0.65rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+    }
+
+    .topbar-main-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    /* Animated SHD Watch Ring */
+    .shd-ring-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 3px solid var(--sys-accent);
+      box-shadow: 0 0 12px var(--sys-accent-glow), inset 0 0 8px var(--sys-accent-glow);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .shd-ring-icon::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--sys-accent);
+      animation: pulseDot 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(0.85); opacity: 0.7; }
+      50% { transform: scale(1.25); opacity: 1; }
+    }
+
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .brand-code {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: var(--sys-accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-main {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Mobile Action Triggers (Hidden on Desktop) */
+    .mobile-nav-triggers {
+      display: none;
+      align-items: center;
+      gap: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .mobile-trigger-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      padding: 0.38rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: var(--font-sans);
+      white-space: nowrap;
+      transition: all 0.18s ease;
+    }
+
+    .mobile-trigger-btn.active {
+      background: var(--sys-accent);
+      border-color: var(--sys-accent);
+      color: #fff;
+    }
+
+    /* Top Controls & Search */
+    .hud-controls {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .search-input {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      padding: 0.42rem 0.85rem 0.42rem 2.1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      width: 230px;
+      max-width: 100%;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--sys-accent);
+      box-shadow: 0 0 0 3px var(--sys-accent-soft);
+      width: 270px;
+      max-width: 100%;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.65rem;
+      width: 15px;
+      height: 15px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .hud-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      color: var(--text-secondary);
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      transition: all 0.18s ease;
+      font-family: var(--font-sans);
+      white-space: nowrap;
+    }
+
+    .hud-btn:hover {
+      border-color: var(--sys-accent);
+      color: var(--text-primary);
+      background: var(--sys-accent-soft);
+    }
+
+    .hud-btn.active {
+      background: var(--sys-accent);
+      border-color: var(--sys-accent);
+      color: #fff;
+    }
+
+    /* ==========================================================================
+       HERO BANNER (DIRECTIVE 51 DOSSIER HEADER)
+       ========================================================================== */
+    .hero-banner {
+      max-width: 1480px;
+      margin: 1.5rem auto 1.25rem;
+      padding: 0 1.5rem;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-card) 100%);
+      border: 1px solid var(--border-strong);
+      border-left: 5px solid var(--sys-accent);
+      border-radius: 12px;
+      padding: 2.1rem 2.4rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .hero-top-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      margin-bottom: 0.95rem;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--sys-accent);
+      background: var(--sys-accent-soft);
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      max-width: 100%;
+    }
+
+    .hero-classification-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      border: 1px solid var(--border-subtle);
+      padding: 0.22rem 0.6rem;
+      border-radius: 4px;
+      background: var(--bg-base);
+    }
+
+    .hero-title {
+      font-size: clamp(1.38rem, 3.2vw, 2.15rem);
+      font-weight: 800;
+      line-height: 1.32;
+      margin-bottom: 0.9rem;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      overflow-wrap: break-word;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(0.92rem, 1.5vw, 1.02rem);
+      color: var(--text-secondary);
+      max-width: 980px;
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+      overflow-wrap: break-word;
+    }
+
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+      gap: 0.9rem;
+      padding-top: 1.3rem;
+      border-top: 1px dashed var(--border-strong);
+    }
+
+    .stat-item {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      min-width: 0;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .stat-value {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: var(--sys-accent);
+      font-family: var(--font-mono);
+    }
+
+    .stat-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       CATEGORY FILTER TABS
+       ========================================================================== */
+    .filter-bar-wrap {
+      max-width: 1480px;
+      margin: 0 auto 1.4rem;
+      padding: 0 1.5rem;
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      background: var(--bg-surface);
+      padding: 0.6rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .filter-tab {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      padding: 0.48rem 0.95rem;
+      border-radius: 6px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.42rem;
+      font-family: var(--font-sans);
+      white-space: nowrap;
+    }
+
+    .filter-tab:hover {
+      color: var(--text-primary);
+      background: var(--bg-elevated);
+    }
+
+    .filter-tab.active {
+      background: var(--sys-accent);
+      color: #ffffff;
+      box-shadow: 0 2px 10px var(--sys-accent-glow);
+    }
+
+    .tab-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       MAIN LAYOUT: SIDEBAR TOC + CONTENT STREAM
+       ========================================================================== */
+    .workspace-grid {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 1.85rem;
+      align-items: start;
+    }
+
+    /* Mobile TOC Backdrop Overlay */
+    .toc-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 290;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .toc-backdrop.open {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Sticky Tactical Sidebar Navigation */
+    .toc-sidebar {
+      position: sticky;
+      top: 4.5rem;
+      max-height: calc(100vh - 5.5rem);
+      overflow-y: auto;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      padding: 1.15rem;
+      box-shadow: var(--shadow-card);
+      z-index: 300;
+    }
+
+    .toc-close-btn {
+      display: none;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      padding: 0.25rem 0.6rem;
+      border-radius: 5px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .toc-header {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--sys-accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding-bottom: 0.65rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toc-groups-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .toc-group {
+      margin-bottom: 0.2rem;
+    }
+
+    .toc-group-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.35rem;
+      padding-left: 0.4rem;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+    }
+
+    .toc-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.42rem 0.6rem;
+      border-radius: 6px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      line-height: 1.35;
+      transition: all 0.15s ease;
+      border-left: 2px solid transparent;
+    }
+
+    .toc-link:hover {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      border-left-color: var(--sys-accent);
+    }
+
+    .toc-link.active {
+      background: var(--sys-accent-soft);
+      color: var(--sys-accent);
+      font-weight: 700;
+      border-left-color: var(--sys-accent);
+    }
+
+    /* ==========================================================================
+       SECTION HEADERS & FACTION DOSSIER CARDS
+       ========================================================================== */
+    .content-stream {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .chapter-banner {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-left: 4px solid var(--sys-accent);
+      border-radius: 10px;
+      padding: 1.15rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      scroll-margin-top: 4.5rem;
+    }
+
+    .chapter-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      min-width: 0;
+    }
+
+    .chapter-code {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--sys-accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      overflow-wrap: break-word;
+    }
+
+    .chapter-title {
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    /* Individual Faction Dossier Container */
+    .faction-dossier {
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.2s ease;
+      scroll-margin-top: 4.5rem;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .faction-header {
+      padding: 1.5rem 1.85rem;
+      background: linear-gradient(90deg, var(--bg-elevated) 0%, var(--bg-card) 100%);
+      border-bottom: 1px solid var(--border-strong);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.1rem;
+      position: relative;
+    }
+
+    .faction-identity {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      min-width: 0;
+      flex: 1 1 280px;
+    }
+
+    .faction-emblem {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: var(--bg-base);
+      border: 2px solid var(--faction-color, var(--sys-accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .faction-emblem svg {
+      width: 32px;
+      height: 32px;
+      color: var(--faction-color, var(--sys-accent));
+    }
+
+    .faction-title-group {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .faction-title-group h3 {
+      font-size: clamp(1.18rem, 2.2vw, 1.45rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.6rem;
+      line-height: 1.3;
+    }
+
+    .faction-en-name {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      overflow-wrap: anywhere;
+    }
+
+    .faction-motto {
+      font-size: 0.88rem;
+      color: var(--faction-color, var(--sys-accent));
+      font-weight: 600;
+      margin-top: 0.25rem;
+      line-height: 1.45;
+    }
+
+    /* Metadata Pill Grid inside Faction Header */
+    .faction-meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      max-width: 100%;
+    }
+
+    .meta-pill {
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    .meta-pill strong {
+      color: var(--text-primary);
+    }
+
+    /* Faction Body Content */
+    .faction-body {
+      padding: 1.65rem 1.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+      min-width: 0;
+    }
+
+    .lore-block {
+      min-width: 0;
+    }
+
+    .lore-block h4 {
+      font-size: clamp(1rem, 1.8vw, 1.12rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid var(--border-subtle);
+      line-height: 1.4;
+    }
+
+    .lore-block h4::before {
+      content: "";
+      width: 4px;
+      height: 18px;
+      background: var(--faction-color, var(--sys-accent));
+      border-radius: 2px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .lore-text {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: var(--line-height-body);
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .lore-text p {
+      text-align: justify;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .lore-text strong {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    /* Tactical Unit / Doctrine Grid */
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+      gap: 0.85rem;
+      margin-top: 0.5rem;
+    }
+
+    .unit-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-top: 2px solid var(--faction-color, var(--sys-accent));
+      border-radius: 8px;
+      padding: 0.9rem 1.05rem;
+      min-width: 0;
+    }
+
+    .unit-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .unit-role-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--faction-color, var(--sys-accent));
+      background: var(--bg-elevated);
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    .unit-desc {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ==========================================================================
+       CHARACTER DOSSIER CARDS (RELATED FIGURES & BOSSES)
+       ========================================================================== */
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr));
+      gap: 1.1rem;
+    }
+
+    .char-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      padding: 1.2rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      position: relative;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+      min-width: 0;
+    }
+
+    .char-card:hover {
+      border-color: var(--faction-color, var(--sys-accent));
+      background: var(--bg-card-hover);
+    }
+
+    .char-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+
+    .char-name {
+      font-size: 1.04rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.35;
+      overflow-wrap: break-word;
+    }
+
+    .char-role {
+      font-size: 0.81rem;
+      color: var(--faction-color, var(--sys-accent));
+      font-weight: 600;
+      margin-top: 0.18rem;
+      line-height: 1.4;
+    }
+
+    /* Character Status Badges */
+    .status-badge {
+      font-family: var(--font-mono);
+      font-size: 0.71rem;
+      font-weight: 700;
+      padding: 0.18rem 0.5rem;
+      border-radius: 4px;
+      white-space: nowrap;
+      letter-spacing: 0.03em;
+      flex-shrink: 0;
+    }
+
+    .status-kia {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .status-active {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    .status-rogue {
+      background: rgba(255, 42, 60, 0.18);
+      color: #ff4d5e;
+      border: 1px solid rgba(255, 42, 60, 0.45);
+    }
+
+    .status-captured {
+      background: rgba(245, 158, 11, 0.16);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .status-mia {
+      background: rgba(168, 85, 247, 0.16);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.4);
+    }
+
+    .char-story {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.78;
+      text-align: justify;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .char-meta-footer {
+      margin-top: auto;
+      padding-top: 0.65rem;
+      border-top: 1px dashed var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.35rem 0.75rem;
+    }
+
+    /* ==========================================================================
+       ISAC / ANNA INTERCEPTED AUDIO LOG CALLOUT
+       ========================================================================== */
+    .audio-log {
+      background: var(--bg-base);
+      border: 1px solid var(--border-strong);
+      border-left: 4px solid var(--isac-cyan);
+      border-radius: 8px;
+      padding: 1.05rem 1.25rem;
+      font-size: 0.92rem;
+    }
+
+    .audio-log.anna-log {
+      border-left-color: var(--anna-red);
+    }
+
+    .audio-log-header {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--isac-cyan);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      overflow-wrap: break-word;
+    }
+
+    .audio-log.anna-log .audio-log-header {
+      color: var(--anna-red);
+    }
+
+    .audio-log-quote {
+      color: var(--text-primary);
+      font-style: italic;
+      line-height: 1.75;
+    }
+
+    .audio-log-source {
+      margin-top: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    /* ==========================================================================
+       CHRONOLOGICAL TIMELINE & RELATIONSHIP MATRIX
+       ========================================================================== */
+    .timeline-container {
+      position: relative;
+      padding-left: 1.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .timeline-container::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--sys-accent), var(--isac-cyan), var(--anna-red));
+    }
+
+    .timeline-node {
+      position: relative;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      padding: 1.1rem 1.3rem;
+    }
+
+    .timeline-node::before {
+      content: "";
+      position: absolute;
+      left: -1.65rem;
+      top: 1.3rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--bg-base);
+      border: 3px solid var(--sys-accent);
+      transform: translateX(1px);
+    }
+
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--sys-accent);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-title {
+      font-size: 1.04rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.45rem;
+      line-height: 1.35;
+    }
+
+    .timeline-desc {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Floating Mobile Quick-Access Pill */
+    .mobile-fab-bar {
+      display: none;
+      position: fixed;
+      right: 1rem;
+      bottom: 1.15rem;
+      z-index: 250;
+      gap: 0.45rem;
+      align-items: center;
+    }
+
+    .fab-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--sys-accent);
+      color: var(--text-primary);
+      padding: 0.52rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: var(--font-sans);
+    }
+
+    .fab-btn-primary {
+      background: var(--sys-accent);
+      color: #fff;
+    }
+
+    /* Search Highlight */
+    mark.shd-mark {
+      background: var(--sys-accent);
+      color: #fff;
+      padding: 0 0.2rem;
+      border-radius: 3px;
+    }
+
+    .hidden-by-filter {
+      display: none !important;
+    }
+
+    /* Footer */
+    .shd-footer {
+      max-width: 1480px;
+      margin: 0 auto 3.5rem;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE ADAPTATION: TABLET, MOBILE PORTRAIT & MOBILE LANDSCAPE
+       ========================================================================== */
+
+    /* 1. Tablet & Mobile Shared (< 1080px): Slide-Over TOC Drawer & Compact Topbar */
+    @media (max-width: 1080px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1rem 3.5rem;
+        gap: 1.35rem;
+      }
+
+      .hero-banner,
+      .filter-bar-wrap {
+        padding: 0 1rem;
+      }
+
+      .topbar-inner {
+        padding: 0.5rem 1rem;
+        gap: 0.5rem;
+      }
+
+      .mobile-nav-triggers {
+        display: inline-flex;
+      }
+
+      /* Collapsible Search & Settings Drawer on Mobile/Tablet so Topbar stays ~52px slim */
+      .hud-controls {
+        display: none;
+        width: 100%;
+        padding-top: 0.55rem;
+        margin-top: 0.2rem;
+        border-top: 1px dashed var(--border-strong);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.45rem;
+      }
+
+      .hud-controls.mobile-open {
+        display: grid;
+      }
+
+      .search-box {
+        grid-column: 1 / -1;
+        width: 100%;
+      }
+
+      .search-input,
+      .search-input:focus {
+        width: 100%;
+        font-size: 0.88rem;
+      }
+
+      .hud-btn {
+        width: 100%;
+        padding: 0.45rem 0.4rem;
+        font-size: 0.76rem;
+      }
+
+      /* Off-Canvas Tactical TOC Drawer */
+      .toc-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0;
+        bottom: 0;
+        width: min(86vw, 340px);
+        max-height: 100vh !important;
+        border-radius: 12px 0 0 12px;
+        border-right: none;
+        transform: translateX(105%);
+        transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+        padding: 1.15rem 1rem 2rem;
+      }
+
+      .toc-sidebar.open {
+        transform: translateX(0);
+      }
+
+      .toc-close-btn {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .mobile-fab-bar {
+        display: flex;
+      }
+
+      .faction-dossier,
+      .chapter-banner {
+        scroll-margin-top: 4rem;
+      }
+    }
+
+    /* 2. Mobile Portrait Mode (< 640px) */
+    @media (max-width: 640px) {
+      .shd-ring-icon {
+        width: 28px;
+        height: 28px;
+        border-width: 2.5px;
+      }
+
+      .shd-ring-icon::after {
+        width: 6px;
+        height: 6px;
+      }
+
+      .brand-code {
+        font-size: 0.64rem;
+        letter-spacing: 0.06em;
+      }
+
+      .brand-main {
+        font-size: 0.86rem;
+      }
+
+      .hero-banner {
+        margin: 0.9rem auto 0.9rem;
+        padding: 0 0.75rem;
+      }
+
+      .filter-bar-wrap,
+      .workspace-grid {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+
+      .hero-card {
+        padding: 1.15rem 1.05rem;
+        border-left-width: 4px;
+      }
+
+      .hero-top-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.45rem;
+      }
+
+      .hero-kicker {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.55rem;
+        line-height: 1.45;
+      }
+
+      .hero-kicker .kicker-sep {
+        display: none;
+      }
+
+      .hero-classification-badge {
+        font-size: 0.66rem;
+        padding: 0.16rem 0.45rem;
+      }
+
+      .hero-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.55rem;
+        padding-top: 1rem;
+      }
+
+      .stat-item {
+        padding: 0.65rem 0.75rem;
+      }
+
+      .stat-value {
+        font-size: 1.02rem;
+      }
+
+      .stat-desc {
+        font-size: 0.72rem;
+      }
+
+      /* Horizontal Swipeable Category Tabs on Mobile Portrait */
+      .filter-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0.45rem;
+        gap: 0.4rem;
+        scrollbar-width: none;
+      }
+
+      .filter-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .filter-tab {
+        padding: 0.42rem 0.75rem;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+
+      .chapter-banner {
+        padding: 0.9rem 1rem;
+      }
+
+      .faction-header {
+        padding: 1.1rem 1rem;
+        gap: 0.85rem;
+      }
+
+      .faction-emblem {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+      }
+
+      .faction-emblem svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .faction-en-name {
+        display: block;
+        width: 100%;
+        font-size: 0.75rem;
+      }
+
+      .faction-meta-pills {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+
+      .meta-pill {
+        width: 100%;
+        font-size: 0.74rem;
+      }
+
+      .faction-body {
+        padding: 1.1rem 1rem;
+        gap: 1.25rem;
+      }
+
+      /* Prevent ugly stretched CJK gaps on narrow portrait screens */
+      .lore-text p,
+      .char-story {
+        text-align: left;
+      }
+
+      .char-grid,
+      .unit-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+      }
+
+      .char-card {
+        padding: 1rem;
+      }
+
+      .char-top {
+        flex-wrap: wrap;
+        gap: 0.45rem;
+      }
+
+      .audio-log {
+        padding: 0.9rem 0.95rem;
+      }
+
+      .timeline-container {
+        padding-left: 1.25rem;
+      }
+
+      .timeline-node {
+        padding: 0.95rem 1rem;
+      }
+
+      .timeline-node::before {
+        left: -1.25rem;
+        width: 10px;
+        height: 10px;
+      }
+    }
+
+    /* 3. Mobile & Tablet Landscape Mode Adaptation (Wide & Short Viewport) */
+    @media (max-width: 1080px) and (orientation: landscape), (max-height: 540px) and (orientation: landscape) {
+      .topbar-inner {
+        padding: 0.32rem 1rem;
+      }
+
+      .shd-ring-icon {
+        width: 26px;
+        height: 26px;
+      }
+
+      .brand-code {
+        display: none;
+      }
+
+      .brand-main {
+        font-size: 0.88rem;
+      }
+
+      .hero-card {
+        padding: 1.25rem 1.5rem;
+      }
+
+      .hero-stats-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.65rem;
+      }
+
+      .char-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.9rem;
+      }
+
+      .unit-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.75rem;
+      }
+
+      /* 2-Column TOC inside Drawer for Short Landscape Screens */
+      .toc-sidebar {
+        width: min(78vw, 560px);
+      }
+
+      .toc-groups-wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       STICKY SHD / ISAC TACTICAL TOPBAR
+       ======================================================================== -->
+  <header class="shd-topbar" id="topHeader">
+    <div class="topbar-inner">
+      <div class="topbar-main-row">
+        <div class="brand-cluster">
+          <div class="shd-ring-icon" title="SHD 战术腕表连接正常"></div>
+          <div class="brand-titles">
+            <span class="brand-code" id="systemStatusText">ISAC // STRATEGIC HOMELAND DIVISION // DIRECTIVE 51</span>
+            <span class="brand-main">《全境封锁2》全派系与剧情终极档案库</span>
+          </div>
+        </div>
+
+        <div class="mobile-nav-triggers">
+          <button class="mobile-trigger-btn" id="mobileToolsBtn" type="button" aria-label="展开检索与显示设置">
+            <span>🔍 设置</span>
+          </button>
+          <button class="mobile-trigger-btn" id="mobileTocBtn" type="button" aria-label="打开章节目录">
+            <span>📑 目录</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hud-controls" id="hudControlsPanel">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="loreSearchInput" class="search-input" placeholder="检索派系、首领、据点、事件..." />
+        </div>
+
+        <button class="hud-btn" id="toggleSystemBtn" type="button" title="切换 ISAC (国土战略局) / ANNA (叛变网络) 视觉协议">
+          <span>⚡ 协议：ISAC 橙</span>
+        </button>
+
+        <button class="hud-btn" id="toggleFontBtn" type="button" title="切换正文字号大小以获得最佳阅读体验">
+          <span>🔠 字号：标准</span>
+        </button>
+
+        <button class="hud-btn" id="toggleThemeBtn" type="button" title="在战术暗黑终端与高对比昼间简报模式间切换">
+          <span>☀️ 昼间模式</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       HERO DOSSIER BANNER
+       ======================================================================== -->
+  <section class="hero-banner">
+    <div class="hero-card">
+      <div class="hero-top-meta">
+        <div class="hero-kicker">
+          <span>● SHD ARCHIVE COMPLETE EDITION</span>
+          <span class="kicker-sep">|</span>
+          <span>WASHINGTON D.C. · LOWER MANHATTAN · BROOKLYN</span>
+        </div>
+        <div class="hero-classification-badge">SHD // LEVEL 5 - EYES ONLY</div>
+      </div>
+      <h1 class="hero-title">当旧世界在“绿毒”中崩塌：全境封锁2 全派系起源、人物传记与暗战全史</h1>
+      <p class="hero-subtitle">
+        黑色星期五爆发的人造天花变种病毒<strong>“美元流感（绿毒 / Green Poison）”</strong>在数周内击碎了现代人类文明。七个月后的盛夏，华盛顿特区、曼哈顿下城与布鲁克林的废墟之上，不再有单纯的正邪二元对立——坚守宪法的特工、绝望暴走的隔离区幸存者、信奉铁血独裁的哗变军人、跨国寡头操控的私营军团、看穿体制黑幕而叛变的昔日同僚，以及潜伏于阴影中猎杀特工的“猎人”交织成一幅波澜壮阔的后末日政治惊悚画卷。本档案完整收录《全境封锁2》本体、<strong>《纽约军阀（Warlords of New York）》</strong>、<strong>《布鲁克林之战（Battle for Brooklyn）》</strong>及<strong>第1至第6年全部赛季追捕（Seasonal Manhunts）</strong>的所有派系来历、核心人物与剧情反转。
+      </p>
+
+      <div class="hero-stats-grid">
+        <div class="stat-item">
+          <span class="stat-label">收录派系与武装组织</span>
+          <span class="stat-value">15 大阵营</span>
+          <span class="stat-desc">含特区、纽约、布鲁克林及隐藏势力</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">核心首领与关键人物</span>
+          <span class="stat-value">65+ 名角色</span>
+          <span class="stat-desc">生平履历、叛变机密与最终结局</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">剧情跨度与DLC覆盖</span>
+          <span class="stat-value">本体 + 双DLC + Y1-Y6</span>
+          <span class="stat-desc">特区战役 · 纽约军阀 · 布鲁克林之战</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">战术AI网络对立</span>
+          <span class="stat-value">ISAC vs ANNA</span>
+          <span class="stat-desc">第51号总统指令与奥尔蒂斯后门阴谋</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       FACTION CATEGORY FILTER TABS
+       ======================================================================== -->
+  <section class="filter-bar-wrap">
+    <div class="filter-tabs" id="factionFilterTabs">
+      <button class="filter-tab active" data-filter="all">
+        <span class="tab-dot" style="background: var(--sys-accent);"></span>全部档案 (All)
+      </button>
+      <button class="filter-tab" data-filter="order">
+        <span class="tab-dot" style="background: var(--peacekeeper-sky);"></span>秩序与友方阵营 (SHD / JTF / 聚落)
+      </button>
+      <button class="filter-tab" data-filter="dc-hostile">
+        <span class="tab-dot" style="background: var(--hyena-green);"></span>华盛顿特区敌对派系 (本体四大主力)
+      </button>
+      <button class="filter-tab" data-filter="ny-dlc">
+        <span class="tab-dot" style="background: var(--cleaner-purple);"></span>纽约与布鲁克林派系 (双DLC宿敌)
+      </button>
+      <button class="filter-tab" data-filter="rogue">
+        <span class="tab-dot" style="background: var(--anna-red);"></span>叛变特工网络与军阀 (Rogue Network)
+      </button>
+      <button class="filter-tab" data-filter="shadow">
+        <span class="tab-dot" style="background: var(--isac-cyan);"></span>猎人计划与地下隐藏派系 (Hunters & Underground)
+      </button>
+      <button class="filter-tab" data-filter="timeline">
+        <span class="tab-dot" style="background: var(--blacktusk-gold);"></span>剧情编年史与权力关系网
+      </button>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       MAIN WORKSPACE: SIDEBAR TOC + DEEP LORE STREAM
+       ======================================================================== -->
+  <div class="toc-backdrop" id="tocBackdrop"></div>
+
+  <main class="workspace-grid">
+    <!-- Sticky Sidebar TOC / Mobile Off-Canvas Drawer -->
+    <aside class="toc-sidebar" id="tocSidebar">
+      <div class="toc-header">
+        <span>// TACTICAL INDEX · 目录导航</span>
+        <button class="toc-close-btn" id="closeTocBtn" type="button">✕ 关闭</button>
+      </div>
+
+      <div class="toc-groups-wrapper">
+        <div class="toc-group">
+          <div class="toc-group-title">Ⅰ. 秩序、官方与平民阵营</div>
+          <ul class="toc-list">
+            <li><a class="toc-link" href="#faction-shd">01. 国土战略局 (SHD)</a></li>
+            <li><a class="toc-link" href="#faction-jtf">02. 联合特遣部队 (JTF) 与联邦残部</a></li>
+            <li><a class="toc-link" href="#faction-settlements">03. 华盛顿三大聚落与平民民兵</a></li>
+            <li><a class="toc-link" href="#faction-peacekeepers">04. 纽约维和者与布鲁克林大桥聚落</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-group">
+          <div class="toc-group-title">Ⅱ. 华盛顿特区四大敌对派系</div>
+          <ul class="toc-list">
+            <li><a class="toc-link" href="#faction-hyenas">05. 鬣狗 (The Hyenas)</a></li>
+            <li><a class="toc-link" href="#faction-outcasts">06. 流亡者 (The Outcasts)</a></li>
+            <li><a class="toc-link" href="#faction-truesons">07. 真实之子 (The True Sons)</a></li>
+            <li><a class="toc-link" href="#faction-blacktusk">08. 黑色獠牙 (Black Tusk / BTSU)</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-group">
+          <div class="toc-group-title">Ⅲ. 纽约与布鲁克林DLC派系</div>
+          <ul class="toc-list">
+            <li><a class="toc-link" href="#faction-cleaners">09. 净化者 (The Cleaners) 与“紫火”</a></li>
+            <li><a class="toc-link" href="#faction-rikers">10. 赖克斯帮 (The Rikers) 与“鼠后”</a></li>
+            <li><a class="toc-link" href="#faction-lmb">11. 幸存者军队残部 (LMB / 白色獠牙)</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-group">
+          <div class="toc-group-title">Ⅳ. 叛变特工网络与赛季追捕</div>
+          <ul class="toc-list">
+            <li><a class="toc-link" href="#faction-rogues">12. 亚伦·基纳与纽约四大军阀</a></li>
+            <li><a class="toc-link" href="#faction-manhunts">13. 刘菲、凯尔索与赛季追捕目标</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-group">
+          <div class="toc-group-title">Ⅴ. 幕后黑手与隐藏暗影势力</div>
+          <ul class="toc-list">
+            <li><a class="toc-link" href="#faction-hunters">14. 猎人计划 (The Hunters) 与麦克马努斯</a></li>
+            <li><a class="toc-link" href="#faction-underground">15. 地下伏击者 (Ambushers) 与街头暴徒</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-group">
+          <div class="toc-group-title">Ⅵ. 全局时间线与阴谋总览</div>
+          <ul class="toc-list">
+            <li><a class="toc-link" href="#section-timeline">16. 全境封锁2 完整编年史</a></li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Lore Content Stream -->
+    <div class="content-stream" id="loreStream">
+
+      <!-- ====================================================================
+           CHAPTER I: FRIENDLY & ORDER FACTIONS
+           ==================================================================== -->
+      <div class="chapter-banner" data-category="order">
+        <div class="chapter-title-wrap">
+          <span class="chapter-code">CHAPTER 01 // DEFENDERS OF CONTINUITY</span>
+          <h2 class="chapter-title">秩序、联邦政权与平民抵抗阵营</h2>
+        </div>
+      </div>
+
+      <!-- 01. SHD -->
+      <article class="faction-dossier" id="faction-shd" data-category="order" style="--faction-color: var(--shd-orange);">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <circle cx="12" cy="12" r="4"></circle>
+                <line x1="12" y1="1" x2="12" y2="5"></line>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="1" y1="12" x2="5" y2="12"></line>
+                <line x1="19" y1="12" x2="23" y2="12"></line>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>国土战略局 <span class="faction-en-name">Strategic Homeland Division (SHD)</span></h3>
+              <div class="faction-motto">“Extremis Malis Extrema Remedia —— 非常之恶，当用非常之策”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>授权法案：</strong>第51号总统指令 (Directive 51)</span>
+            <span class="meta-pill"><strong>核心基地：</strong>华盛顿白宫 (The White House)</span>
+            <span class="meta-pill"><strong>中枢AI：</strong>ISAC (分析与通讯集成系统)</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>起源与组织来历：暗冬季节演习后的终极保险丝</h4>
+            <div class="lore-text">
+              <p>
+                国土战略局（SHD，简称“全境封锁/特工组织”）的诞生源于2001年美国政府进行的一场代号为<strong>“暗冬行动（Operation Dark Winter）”</strong>的国家级生物恐怖袭击桌面推演。推演结果令白宫高层不寒而栗：一旦遭遇高传染性病原体袭击，现有的医疗、警务、国民警卫队乃至联邦行政体系将在数日内彻底瘫痪，社会供应链断裂将引发灾难性的次生内乱。为此，美国总统于2007年秘密签署了<strong>《第51号总统指令》（Directive 51）</strong>，旨在确保极端灾难下的“政府连续性（Continuity of Government, COG）”，并秘密组建了直属于总统本人的最后防线——<strong>国土战略局（SHD）</strong>。
+              </p>
+              <p>
+                SHD特工并非传统意义上的现役军人，而是深度潜伏在社会各行各业的顶级精英（退伍特种兵、外科医生、核物理学家、消防队长、联邦探员、顶尖工程师）。在平时，他们以普通公民身份生活，不佩戴军衔，不为人知；一旦国家遭遇灭顶之灾且常规机构失能，他们佩戴的<strong>SHD智能战术腕表</strong>与肩部通讯器便会亮起标志性的<strong>橙色光环</strong>。激活后的特工直接跳过一切地方法律与官僚层级，拥有在紧急状态下独立调查、征用物资、乃至直接处决威胁国家存续之敌的最高自由裁量权。
+              </p>
+              <p>
+                然而，这套看似崇高的制度从一开始就埋下了致命的隐患：首先，<strong>“第一波特工（First Wave）”</strong>在纽约疫情爆发初期被仓促投送进中央公园与暗区（Dark Zone），随后JTF因无力维持防线而匆忙撤离并封死了暗区高墙，将成百上千名第一波特工与无辜平民像垃圾一样遗弃在人间炼狱中。这种背叛直接催生了以<strong>亚伦·基纳（Aaron Keener）</strong>为首的庞大叛变特工潮。其次，支撑全美特工运作的<strong>ISAC（Intelligent System Analytic Computer）</strong>服务器在《全境封锁2》开篇时遭到破坏，全美SHD网络断联；更可怕的是，随着剧情推进，特工们逐渐发现国土安全部长<strong>卡尔文·麦克马努斯（Calvin McManus）</strong>早在SHD装备与ISAC底层植入了后门，将SHD特工视为随时可以抹杀的棋子。
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>核心人物全档案：白宫指挥中枢与一线传奇特工</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">玩家特工（警长 / The Sheriff）</div>
+                    <div class="char-role">第二波王牌特工 / 华盛顿与纽约拯救者</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 活跃</span>
+                </div>
+                <div class="char-story">
+                  在华盛顿特区之外的聚落抵御流亡者袭击时接收到SHD全局求救信号，毅然奔赴特区。单枪匹马重启全美SHD网络，荡平鬣狗、流亡者与真实之子三大派系，击退黑色獠牙对潮汐盆地的入侵；随后在《纽约军阀》中南下曼哈顿下城，连续铲除四大叛变军阀并在自由岛击败亚伦·基纳，被曼尼·奥尔特加亲切地称为“警长（Sheriff）”。
+                </div>
+                <div class="char-meta-footer">
+                  <span>隶属：第二波SHD特工</span>
+                  <span>驻地：白宫行动基地</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">曼尼·奥尔特加 (Manny Ortega)</div>
+                    <div class="char-role">白宫行动基地最高协调官 / 前国民警卫队通讯专家</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 活跃</span>
+                </div>
+                <div class="char-story">
+                  原本只是陆军国民警卫队的一名普通通讯技术员。在华盛顿JTF高层要么阵亡、要么随瑞奇微将军叛变后，曼尼不得不临危受命，成为白宫行动基地（Base of Operations）的实际最高调度官。他为人正直、重视平民生命，对官僚政客与黑色獠牙深恶痛绝。在第5年赛季中与剧场聚落的玛丽·辛格（Mari Singh）育有一女，为了给下一代留下真正安全的家园而坚定对抗麦克马努斯与索科洛娃的阴谋。
+                </div>
+                <div class="char-meta-footer">
+                  <span>隶属：JTF / SHD联合指挥中心</span>
+                  <span>驻地：白宫战情室</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">艾拉妮·凯尔索 (Alani Kelso)</div>
+                    <div class="char-role">资深SHD外勤特工 / 前CIA特别行动组成员</div>
+                  </div>
+                  <span class="status-badge status-rogue">ROGUE (战略性潜伏)</span>
+                </div>
+                <div class="char-story">
+                  被招募进SHD前曾是美国中央情报局（CIA）准军事特别行动部门的精英干员。在华盛顿沦陷期间，她是极少数幸存并坚持在一线作战的特工，协助玩家救出奥德萨·索耶的女儿、攻克波托马克活动中心与潮汐盆地，并一同前往纽约追捕基纳。然而在第5年《先锋（Vanguard）》赛季末，凯尔索在避风港发现了基纳与西奥·帕内尔假死脱身的真相，并意识到ISAC已被麦克马努斯监控。为了在暗中保护白宫与玩家特工，她在救援行动后毅然激活ANNA协议转为“名义叛变”，与基纳联手对抗猎人与黑色獠牙。
+                </div>
+                <div class="char-meta-footer">
+                  <span>前身份：CIA特别行动处</span>
+                  <span>转折点：Y5S3 先锋赛季避风港事件</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">梅兰妮·霍斯金斯 (Melanie Hoskins)</div>
+                    <div class="char-role">布鲁克林驻防特工 / 《布鲁克林之战》引路人</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 活跃</span>
+                </div>
+                <div class="char-story">
+                  《布鲁克林之战（Battle for Brooklyn）》DLC的核心特工。当净化者携带毁灭性的“紫火”跨过东河突袭布鲁克林大桥聚落（Bridge Settlement）时，霍斯金斯发出紧急求救信号将玩家引向布鲁克林，并与前医疗主管杰西卡·坎德尔博士、飞行员凯西·贝尔一同协调防务，追查H5炼油厂的紫火源头。
+                </div>
+                <div class="char-meta-footer">
+                  <span>登场：《布鲁克林之战》DLC</span>
+                  <span>驻地：布鲁克林大桥聚落</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="audio-log">
+            <div class="audio-log-header">▶ ISAC 加密档案摘录 // 第51号总统指令核心悖论</div>
+            <div class="audio-log-quote">
+              “当你赋予一群人凌驾于法律之上的绝对权力，让他们去拯救一个已经死去的体制，然后又在他们流尽鲜血时把他们抛弃在隔离墙内——你以为你会得到忠诚的卫士？不，你只会锻造出最致命的掘墓人。”
+            </div>
+            <div class="audio-log-source">—— 截获自纽约暗区第一波特工遗留录音</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 02. JTF & US Government Remnants -->
+      <article class="faction-dossier" id="faction-jtf" data-category="order" style="--faction-color: #38bdf8;">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>联合特遣部队与联邦政权残部 <span class="faction-en-name">Joint Task Force (JTF) & U.S. Gov</span></h3>
+              <div class="faction-motto">“在崩溃边缘苦撑的旧秩序最后残影”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>组成：</strong>国民警卫队、警察、消防员、CERA医疗人员</span>
+            <span class="meta-pill"><strong>华盛顿现状：</strong>因瑞奇微哗变而近乎解体</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>来历与溃败始末：从国家栋梁到分崩离析</h4>
+            <div class="lore-text">
+              <p>
+                <strong>联合特遣部队（Joint Task Force，简称 JTF）</strong>是在“绿毒”疫情全面失控后，由美国联邦应急管理局（CERA）、陆军国民警卫队、各地警察局（如NYPD、MPD）、消防局及医护志愿者紧急整合而成的统一救灾与治安维持部队。在初代《全境封锁》的纽约寒冬中，尽管JTF伤亡惨重、装备捉襟见肘，但仍在罗伊·贝尼特斯（Roy Benitez）等指挥官带领下坚守邮局基地。
+              </p>
+              <p>
+                然而到了《全境封锁2》的华盛顿特区，JTF却经历了毁灭性的内部崩溃。首先是联邦最高权力的连续断代：时任总统<strong>沃勒（President Waller）</strong>在疫情初期突发心脏病去世；继任总统<strong>罗伯特·门德斯（Robert Mendez，原副总统）</strong>试图坚守宪法并与SHD合作，却在安全屋内离奇“吞枪自杀”——后经录音证实，门德斯总统实则是因为拒绝配合寡头财团的计划，被自己贴身的特勤局保镖暗杀灭口！紧接着，原本由众议院议长顺位继任的第47任总统<strong>安德鲁·艾利斯（Andrew Ellis）</strong>，表面上在空军一号坠毁后被鬣狗软禁、后被玩家救回白宫，实际上他早已被<strong>黑色獠牙（Black Tusk）</strong>幕后财团收买，成为彻底的傀儡与叛国者。
+              </p>
+              <p>
+                在军事层面，驻防华盛顿特区的JTF主力指挥官<strong>安东·瑞奇微将军（General Antwon Ridgeway）</strong>在面对资源枯竭与罗斯福岛隔离危机时走向极权暴政，最终率领大批精锐JTF士兵哗变自立为<strong>“真实之子（True Sons）”</strong>，并反过来屠杀拒绝同流合污的昔日JTF战友。至此，华盛顿特区的JTF名存实亡，仅剩白宫内的少数文职与后勤人员在曼尼·奥尔特加的带领下配合平民民兵运作。
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>联邦政权核心人物档案：阴谋漩涡中的总统与高官</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">安德鲁·艾利斯总统 (President Andrew Ellis)</div>
+                    <div class="char-role">美国第47任总统 / 黑色獠牙政治傀儡</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 被刘菲处决</span>
+                </div>
+                <div class="char-story">
+                  原美国众议院议长，在沃勒总统病逝、门德斯总统被暗杀后顺位继任总统。玩家特工在银行总部历经血战将他救出并护送回白宫，他在白宫发表了慷慨激昂的恢复秩序演说，转身却将装有<strong>广谱抗病毒药物（Broad-Spectrum Antivirals）</strong>样本的手提箱拱手交给黑色獠牙，并在特勤局内鬼协助下潜逃至白橡木营地（Camp White Oak）。在第4赛季《值勤终点》中，假意投靠黑色獠牙的刘菲（Faye Lau）趁乱直接拔枪将其击毙，终结了这位叛国总统的闹剧。
+                </div>
+                <div class="char-meta-footer">
+                  <span>真实效忠：娜塔莉亚·索科洛娃 / 幕后财团</span>
+                  <span>死亡地点：白橡木营地</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">罗伯特·门德斯总统 (President Robert Mendez)</div>
+                    <div class="char-role">美国第46任总统（原副总统）</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 遭特勤局暗杀</span>
+                </div>
+                <div class="char-story">
+                  沃勒总统病逝后的合法继任者。门德斯是一位真正心系国民、拒绝向寡头集团妥协的领导人。正因他坚决反对将国家控制权移交给私人军事公司，他的两名贴身特勤局特工（受命于幕后阴谋集团）在安全屋内强行将他杀害，并伪造了“因压力过大吞枪自杀”的现场，从而让听话的艾利斯顺利上位。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联收藏品：机密录音《门德斯之死》</span>
+                  <span>结局：政治暗杀牺牲品</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 03. D.C. Civilian Militia & Three Settlements -->
+      <article class="faction-dossier" id="faction-settlements" data-category="order" style="--faction-color: #22c55e;">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>华盛顿三大聚落与平民民兵 <span class="faction-en-name">D.C. Settlements & Civilian Militia</span></h3>
+              <div class="faction-motto">“当政府与军队抛弃了我们，我们自己拿起武器保卫家园”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>三大核心聚落：</strong>戏院 (Theater)、校区 (Campus)、城堡 (Castle)</span>
+            <span class="meta-pill"><strong>职能：</strong>控制点驻防、物资生产、特种专家庇护</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>来历与背景：后末日自给自足的民间共同体</h4>
+            <div class="lore-text">
+              <p>
+                在JTF崩溃、CERA撤离之后，华盛顿特区的普通幸存者意识到等待官方救援等同于慢性自杀。他们依托城市建筑废墟建立起封闭式防御社区——即<strong>聚落（Settlements）</strong>，在屋顶开辟水培菜园、架设太阳能电池板与雨水净化装置，并组建了穿戴简易战术背心的<strong>平民民兵（Civilian Militia）</strong>。随着玩家特工不断解放控制点（Control Points）并援助聚落建设，民兵的武装水平显著提升，成为特区街头与鬣狗、流亡者、真实之子争夺地盘的中坚力量。
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>三大聚落与核心领袖档案</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">奥德萨·索耶 (Odessa Sawyer)</div>
+                    <div class="char-role">戏院聚落（The Theater）领袖 / 前JTF特工</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 活跃</span>
+                </div>
+                <div class="char-story">
+                  位于华盛顿东区的<strong>戏院聚落</strong>创始人。奥德萨原本是一名尽职尽责的JTF人员，但在一次惨烈的防御战中失去了右小腿（后安装义肢），更因JTF高层的无能导致她的幼女<strong>伊莉诺（Eleanor）</strong>被鬣狗头目“土狼（Coyote）”绑架作为人质。对JTF彻底寒心的奥德萨脱离体制建立了戏院聚落。玩家特工攻破华盛顿大酒店救回伊莉诺后，奥德萨重新向SHD敞开心扉，成为白宫最坚定的民间盟友。
+                </div>
+                <div class="char-meta-footer">
+                  <span>聚落：戏院聚落 (Downtown East)</span>
+                  <span>核心羁绊：女儿伊莉诺·索耶</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">亨利·海耶斯 (Henry Hayes)</div>
+                    <div class="char-role">校区聚落（The Campus）最高领袖</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 活跃</span>
+                </div>
+                <div class="char-story">
+                  位于华盛顿西区的<strong>校区聚落</strong>负责人。海耶斯性格沉稳务实，将大学与演出场地改造成了西区最大的幸存者庇护所。校区聚落由于紧邻罗斯福岛与真实之子防线，长期遭受流亡者自杀式袭击与真实之子迫击炮威胁。在玩家协助恢复供电、救回被俘专家后，海耶斯将校区打造成西区坚不可摧的补给枢纽。
+                </div>
+                <div class="char-meta-footer">
+                  <span>聚落：校区聚落 (Federal Triangle / West End)</span>
+                  <span>宿敌：流亡者与真实之子</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">瓦莉 (Wally) & 城堡聚落幸存者</div>
+                    <div class="char-role">城堡聚落（The Castle）重建协调员</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 活跃</span>
+                </div>
+                <div class="char-story">
+                  <strong>城堡聚落</strong>是主线剧情中最令人揪心的惨案现场：在玩家抵达前夕，真实之子首领安东·瑞奇微将军为了杀鸡儆猴，下令向挤满平民的城堡聚落发射了装载高浓度<strong>DC-62实验性生化毒剂</strong>的迫击炮弹。橙黄色的毒雾瞬间吞噬了数百名男女老少，仅小女孩达妮拉等极少数人躲在地窖幸存。在沉寂数年后，第5年赛季中由<strong>瓦莉（Wally）</strong>带领工程团队彻底清理了DC-62污染，使城堡聚落浴火重生。
+                </div>
+                <div class="char-meta-footer">
+                  <span>聚落：城堡聚落 (East Mall)</span>
+                  <span>历史创伤：DC-62生化迫击炮惨案</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">玛丽·辛格 (Mari Singh)</div>
+                    <div class="char-role">前国家水族馆主管 / 农渔生态专家</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 活跃</span>
+                </div>
+                <div class="char-story">
+                  华盛顿国家水族馆负责人，精通水产养殖与生态循环系统，也是曼尼·奥尔特加的伴侣。在第5年《折翼（Broken Wings）》赛季中，黑色獠牙突袭城堡聚落绑架了身怀六甲的玛丽，企图逼迫她为黑色獠牙基地设计生态维持系统并以此要挟曼尼。玩家特工一路追查并在国家动物园成功将她救回。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联赛季：Y5S1 折翼赛季终极救援目标</span>
+                  <span>关系：曼尼·奥尔特加之妻</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 04. NYC Peacekeepers & Brooklyn Bridge Settlement -->
+      <article class="faction-dossier" id="faction-peacekeepers" data-category="order" style="--faction-color: #0ea5e9;">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>纽约维和者与布鲁克林大桥聚落 <span class="faction-en-name">Peacekeepers (Haven) & Bridge Settlement</span></h3>
+              <div class="faction-motto">“脱下JTF制服，在曼哈顿下城与东河彼岸筑起最后的避风港”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>登场DLC：</strong>《纽约军阀》 & 《布鲁克林之战》</span>
+            <span class="meta-pill"><strong>核心据点：</strong>避风港 (Haven) / 大桥聚落 (The Bridge)</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>来历与背景：与JTF决裂后的纽约自救联盟</h4>
+            <div class="lore-text">
+              <p>
+                在初代纽约寒冬过后，原本驻扎在中城邮局的三位核心部门主管——技术部<strong>保罗·罗德斯（Paul Rhodes）</strong>、安保部<strong>罗伊·贝尼特斯（Roy Benitez）</strong>与医疗部<strong>杰西卡·坎德尔博士（Dr. Jessica Kandel）</strong>，目睹了联邦政府将资源全部抽调往华盛顿、任由纽约自生自灭的冷漠行径。更令罗德斯愤怒的是，大批佩戴SHD手表的第一波与第二波特工相继叛变，反过来屠杀JTF士兵与平民。
+              </p>
+              <p>
+                尤其当亚伦·基纳使用新型生化武器<strong>“日蚀（Eclipse）”</strong>袭击曼哈顿下城的市政厅（City Hall）JTF总部，导致整个基地化为腐烂毒窟后，罗德斯与贝尼特斯正式脱下JTF制服，召集幸存的警察、退伍军人与技工，在曼哈顿下城建立了高度设防的<strong>“避风港（Haven）”</strong>聚落，自称<strong>“维和者（Peacekeepers）”</strong>。而在东河对岸的布鲁克林，由叛变黑客西奥·帕内尔（Theo Parnell）暗中提供技术支持建立的<strong>“大桥聚落（The Bridge Settlement）”</strong>则在《布鲁克林之战》DLC中成为抵御“紫火”净化者与“鼠后”赖克斯帮入侵的核心堡垒。
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>纽约与布鲁克林核心人物档案</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">保罗·罗德斯 (Paul Rhodes)</div>
+                    <div class="char-role">避风港（Haven）最高领袖 / 前初代技术部主管</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 活跃</span>
+                </div>
+                <div class="char-story">
+                  脾气暴躁、满嘴牢骚但内心极其善良的顶尖工程师。在经历了无数次特工叛变（尤其是他最信任的挚友刘菲与罗伊·贝尼特斯的惨剧）后，罗德斯对任何戴着SHD手表的人都充满戒备与敌意。即便如此，为了拯救曼哈顿下城的平民，他依然向玩家特工与凯尔索开放了避风港。
+                </div>
+                <div class="char-meta-footer">
+                  <span>驻地：曼哈顿下城·避风港</span>
+                  <span>经典特征：极度不信任SHD特工体制</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">罗伊·贝尼特斯 (Roy Benitez)</div>
+                    <div class="char-role">维和者武装总指挥 / 前NYPD上尉、初代安保主管</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 被刘菲枪杀</span>
+                </div>
+                <div class="char-story">
+                  初代玩家最敬重的老警长。在《纽约军阀》期间与罗德斯共同守护避风港，并将刘菲视若己出。然而在自由岛战役后，当贝尼特斯发现刘菲私自与黑色獠牙接触并试图劝阻她时，为了防止计划败露的刘菲含泪开枪射杀了这位情同父女的老搭档。贝尼特斯之死成为整个《全境封锁2》最令人心碎的悲剧之一，也彻底斩断了刘菲的回头路。
+                </div>
+                <div class="char-meta-footer">
+                  <span>前职务：NYPD 曼哈顿警队队长</span>
+                  <span>死因：发现刘菲叛变真相后遭灭口</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">杰西卡·坎德尔博士 (Dr. Jessica Kandel)</div>
+                    <div class="char-role">病毒学家 / 前初代医疗部主管 / 布鲁克林医疗核心</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 活跃</span>
+                </div>
+                <div class="char-story">
+                  初代中率先研究“绿毒”基因序列的权威病毒学家。在《纽约军阀》录音中，她曾因无法忍受JTF官僚束缚而离开中城，甚至在不知情的情况下一度被基纳利用去研究病毒抗性。在<strong>《布鲁克林之战》DLC</strong>中，坎德尔博士重返主线视野，在布鲁克林大桥聚落遭遇净化者“紫火”猛攻时挺身而出，协助玩家分析紫火化学结构并稳定聚落防线。
+                </div>
+                <div class="char-meta-footer">
+                  <span>重返登场：《布鲁克林之战》DLC</span>
+                  <span>专长：病毒学与生化危机应对</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ====================================================================
+           CHAPTER II: WASHINGTON D.C. FOUR HOSTILE FACTIONS
+           ==================================================================== -->
+      <div class="chapter-banner" data-category="dc-hostile">
+        <div class="chapter-title-wrap">
+          <span class="chapter-code">CHAPTER 02 // HOSTILE FACTIONS OF WASHINGTON D.C.</span>
+          <h2 class="chapter-title">华盛顿特区四大主力敌对派系（本体核心势力）</h2>
+        </div>
+      </div>
+
+      <!-- 05. The Hyenas -->
+      <article class="faction-dossier" id="faction-hyenas" data-category="dc-hostile" style="--faction-color: var(--hyena-green);">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>鬣狗 <span class="faction-en-name">The Hyenas</span></h3>
+              <div class="faction-motto">“弱肉强食的末日狂欢者——抢夺能用的一切，砸碎带不走的一切”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>核心据点：</strong>区域联盟体育馆 (District Union Arena)</span>
+            <span class="meta-pill"><strong>标志色彩：</strong>荧光绿涂鸦与防毒面具</span>
+            <span class="meta-pill"><strong>幕后金主：</strong>黑色獠牙（巴顿·谢弗暗中资助）</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>起源与来历：从街头混混到黑色獠牙的代理人</h4>
+            <div class="lore-text">
+              <p>
+                <strong>鬣狗（The Hyenas）</strong>并非一个拥有严密政治纲领的军事组织，而是由华盛顿特区崩溃后涌现的数十个街头黑帮、飞车党、毒贩、无政府主义暴徒和机会主义掠夺者组成的松散联盟。正如其名“鬣狗”一样，他们从不自己生产任何物资，而是专门跟在灾难后面撕咬弱者——洗劫平民聚落、绑架人质勒索赎金、在废墟中举办震耳欲聋的电音狂欢派对。对于自己带不走的医疗设备或净水装置，他们会毫不犹豫地砸毁，只为不让其他幸存者活下去。
+              </p>
+              <p>
+                鬣狗最标志性的特征是他们大量制造并吸食一种名为<strong>“香料（Spice）”</strong>的合成神经兴奋剂（装在绿色吸入器中）。在战斗中，鬣狗突击手（Rushers）会当场猛吸一口“香料”，瞬间进入痛觉麻痹、肾上腺素狂飙的癫狂状态，挥舞电击警棍不顾死活地冲向特工。
+              </p>
+              <p>
+                为了避免各个帮派之间自相残杀，最强悍的几位帮派头目组建了<strong>“鬣狗议会（The Council）”</strong>，将区域联盟体育馆（District Union Arena）改造成庞大的黑市与权力中心。然而，许多玩家在深挖收集品后才会震惊地发现：<strong>为什么一群乌合之众能拥有军用级遥控炸弹车、防弹重甲甚至空军一号的情报？</strong>答案是——<strong>黑色獠牙指挥官巴顿·谢弗（Bardon Schaeffer）</strong>在幕后向鬣狗议会提供了大批军火与情报！黑色獠牙故意扶持这群疯狗在特区四处纵火，以此消耗JTF与SHD特工的有生力量，为黑色獠牙随后的正式接管铺平道路。
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>典型兵种与战术体系</h4>
+            <div class="unit-grid">
+              <div class="unit-card">
+                <div class="unit-title">狂暴突击手 (Rusher) <span class="unit-role-tag">香料成瘾者</span></div>
+                <div class="unit-desc">佩戴涂鸦摩托头盔，冲锋前吸食绿色“香料”获得临时额外生命值护盾，手持高伏特电击警棍高速逼近，能将特工电击致晕。</div>
+              </div>
+              <div class="unit-card">
+                <div class="unit-title">遥控工程师 (Controller) <span class="unit-role-tag">自爆玩具车</span></div>
+                <div class="unit-desc">利用改装的高速遥控越野玩具车绑上C4炸药与铁钉，从掩体后方远距离操控冲向特工脚下引爆，造成流血与致盲效果。</div>
+              </div>
+              <div class="unit-card">
+                <div class="unit-title">重装机枪手 (Tank) <span class="unit-role-tag">全覆式重甲</span></div>
+                <div class="unit-desc">身穿厚重的拼装防暴装甲、手持加特林机枪步步紧逼，唯有击碎其背后的弹药链条才能迫使其跪地装填。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>鬣狗议会（The Council）与核心人物档案</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">土狼 (Coyote)</div>
+                    <div class="char-role">鬣狗创始元老 / 华盛顿大酒店盘踞者</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 主线击毙</span>
+                </div>
+                <div class="char-story">
+                  鬣狗最凶名昭著的女性头目之一。她率部攻占了华盛顿大酒店（Grand Washington Hotel），并绑架了戏院聚落领袖奥德萨·索耶的幼女伊莉诺作为要挟筹码。土狼性格残忍乖戾，在录音中甚至因为手下多嘴而当场将其射杀。玩家特工突袭酒店顶层救出伊莉诺，并将“土狼”击毙（其标志性的防毒面具后来成为游戏内著名的奇特装备<strong>“土狼面具 Coyote's Mask”</strong>）。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联任务：华盛顿大酒店</span>
+                  <span>掉落奇特：土狼面具 (Coyote's Mask)</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">蟑螂 (Roach) & 圣徒 (Saint)</div>
+                    <div class="char-role">鬣狗前线战团头目</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 主线击毙</span>
+                </div>
+                <div class="char-story">
+                  <strong>圣徒（Saint）</strong>率领鬣狗攻占了杰斐逊贸易中心，企图逼迫ISAC工程师阿吉特·辛格交出SHD系统控制权，被玩家击毙；<strong>蟑螂（Roach）</strong>则率队洗劫了银行总部（Bank Headquarters），在金库前冷血处决了被俘的SHD特工搭档以逼迫另一名特工解锁总统艾利斯的藏身处，最终在银行大厅被玩家清算。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联任务：杰斐逊贸易中心 / 银行总部</span>
+                  <span>罪行：处决战俘与劫持总统</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">账本 (Books)、角币 (Dime)、柴油 (Diesel)</div>
+                    <div class="char-role">鬣狗议会三巨头 / 区域联盟体育馆首领</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 要塞击毙</span>
+                </div>
+                <div class="char-story">
+                  掌控鬣狗日常运作的三名议会核心成员：<strong>柴油（Diesel）</strong>脾气火爆，驻守体育馆地下车库并驾驶装甲车；<strong>角币（Dime）</strong>负责军火分配与防卫；<strong>账本（Books）</strong>则是鬣狗内部罕见的高智商财务与战略总管，负责与幕后金主（黑色獠牙）对接。在玩家进攻区域联盟体育馆要塞时，三人先后被击毙。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联要塞：区域联盟体育馆 (District Union Arena)</span>
+                  <span>结局：议会核心覆灭</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">浩劫 (Mayhem) & 黄道带 (Zodiac)</div>
+                    <div class="char-role">鬣狗议会幸存高层</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 在逃/残余</span>
+                </div>
+                <div class="char-story">
+                  鬣狗议会另外两名最高领袖。<strong>浩劫（Mayhem）</strong>因多疑谨慎而拒绝出席区域联盟体育馆的会议，并通过视频警告账本等人小心SHD特工；<strong>黄道带（Zodiac）</strong>则是一个连其他议会成员都感到恶心与恐惧的极端虐杀狂，热衷于在暗室中折磨俘虏。两人因未在体育馆现场而逃过一劫，继续统领鬣狗残部。
+                </div>
+                <div class="char-meta-footer">
+                  <span>身份：鬣狗议会幕后元老</span>
+                  <span>状态：体育馆战役中幸存</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 06. The Outcasts -->
+      <article class="faction-dossier" id="faction-outcasts" data-category="dc-hostile" style="--faction-color: var(--outcast-yellow);">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"></path>
+                <line x1="9" y1="21" x2="15" y2="21"></line>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>流亡者 <span class="faction-en-name">The Outcasts</span></h3>
+              <div class="faction-motto">“你们将我们锁在炼狱中等死，现在，全世界都将共同承受这份痛苦！”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>核心据点：</strong>罗斯福岛 (Roosevelt Island) / 曼宁国家动物园</span>
+            <span class="meta-pill"><strong>标志色彩：</strong>生化警示黄与自杀式炸弹背心</span>
+            <span class="meta-pill"><strong>最高领袖：</strong>艾米琳·肖 (Emeline Shaw)</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>起源与来历：罗斯福岛隔离营的人间惨剧与狂热复仇</h4>
+            <div class="lore-text">
+              <p>
+                在《全境封锁2》的所有敌对派系中，<strong>流亡者（The Outcasts）</strong>拥有最令人窒息、也最具道德拷问意味的悲剧起源。在“绿毒”疫情于华盛顿特区爆发初期，当局为了控制传染源，在波托马克河中央的<strong>罗斯福岛（Roosevelt Island）</strong>设立了大型临时隔离营，将成千上万名疑似感染者乃至仅仅是发烧感冒的普通市民强行集中关押在岛上。
+              </p>
+              <p>
+                当时负责管理罗斯福岛防务的正是后来的真实之子首领——时任JTF指挥官<strong>安东·瑞奇微上校（Antwon Ridgeway）</strong>。随着疫情恶化，瑞奇微不仅没有设法调配医疗物资，反而采取了冷血至极的“物理抹除式封锁”：他下令炸毁并封死通往罗斯福岛的桥梁，切断岛上的食品、净水、供暖与电力供应，甚至命令岸边的士兵直接开枪射杀任何试图游过河或靠近铁丝网求救的平民！在长达数周的饥寒交迫与病毒肆虐中，罗斯福岛化作了活生生的人间地狱，尸体堆积如山，没感染的人也被活活饿死或交叉感染。
+              </p>
+              <p>
+                就在这片绝望的炼狱里，一位刚刚目睹自己年幼女儿在怀中死于高烧的前民权律师——<strong>艾米琳·肖（Emeline Shaw）</strong>站了出来。奇迹般的是，艾米琳本人虽然感染了绿毒，却成为了极罕见的<strong>“无症状携带者（Asymptomatic Carrier）”</strong>：她体内流淌着高浓度的致命病毒，自己却不会发病死亡。艾米琳将这一切归结为“天选的复仇使命”，她认为岸上每一个袖手旁观的“幸存者”都是踩着隔离区死难者尸骨苟活的共犯！她率领愤怒到极点的隔离区幸存者发动暴动，用铁锤、燃烧瓶和自制武器屠杀了岛上的JTF守军，正式建立起狂热的末日复仇教团——<strong>流亡者</strong>。
+              </p>
+              <p>
+                流亡者的作战方式极其极端：他们将艾米琳的含毒血液涂抹在箭头与刀刃上，将感染者的尸体投进城市水源，甚至让身患绝症的狂热信徒绑满炸药、化身为<strong>人肉自爆卡车（Scorchers / Rushers）</strong>冲向平民与特工，只求拉着整个世界一起陪葬。
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>典型兵种与战术体系</h4>
+            <div class="unit-grid">
+              <div class="unit-card">
+                <div class="unit-title">自爆狂信徒 (Rusher) <span class="unit-role-tag">人肉炸弹</span></div>
+                <div class="unit-desc">胸前绑满C4与燃烧剂的绝症感染者，边狂吼边拍击胸口引信冲向掩体后的特工，一旦贴身引爆可瞬间炸碎特工全部装甲。</div>
+              </div>
+              <div class="unit-card">
+                <div class="unit-title">重锤行刑者 (Tank / Sledgehammer) <span class="unit-role-tag">近战梦魇</span></div>
+                <div class="unit-desc">全身包裹防爆重甲的魁梧巨汉，不携带任何枪械，唯有一柄沉重的双手破城大锤，奔跑速度极快，能无视掩体将特工一锤砸成重伤。</div>
+              </div>
+              <div class="unit-card">
+                <div class="unit-title">生化火焰兵与毒箭手 <span class="unit-role-tag">复合持续伤害</span></div>
+                <div class="unit-desc">使用装填高黏度铝热燃烧瓶的投掷手、喷火兵以及涂抹感染者血液的复合弓箭手，封锁特工的掩体走位。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>流亡者核心人物全档案</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">艾米琳·肖 (Emeline Shaw)</div>
+                    <div class="char-role">流亡者最高精神领袖 / 无症状绿毒携带者</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 动物园击毙</span>
+                </div>
+                <div class="char-story">
+                  前华盛顿知名律师。罗斯福岛隔离惨案彻底摧毁了她的理智，丧女之痛让她化身为冷酷的狂信女皇。她平时居住在经过彻底消毒的船舱内，通过广播向信徒宣讲复仇教义，并定期抽取自己的带毒血液制造生化武器。在罗斯福岛要塞被玩家特工攻破后，艾米琳率主力逃往<strong>曼宁国家动物园（Manning National Zoo）</strong>企图建立新的圣殿，最终在动物园单轨列车决战中被玩家特工彻底击毙。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联要塞：罗斯福岛 / 曼宁国家动物园</span>
+                  <span>特殊体质：体内携带活性绿毒但自身免疫</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">“战略家”哈兰·劳埃德 (Harlan Lloyd)</div>
+                    <div class="char-role">流亡者首席军事顾问 / 前联邦风险评估师</div>
+                  </div>
+                  <span class="status-badge status-captured">CAPTURED 被俘/死亡</span>
+                </div>
+                <div class="char-story">
+                  原本是联邦政府的危机应对与风险评估专家，当初正是他编写的评估报告建议政府实施强制隔离。流亡者攻破隔离区后俘虏了他；为了苟延残喘，哈兰背叛了政府，利用自己的专业知识帮艾米琳策划了针对华盛顿供水系统、疾控中心（CDC）与平民聚落的多次恐怖袭击。玩家在波托马克活动中心（Potomac Event Center）将其围剿。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联任务：波托马克活动中心</span>
+                  <span>外号：战略家 (The Strategist)</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">铁锤 (The Hammer) & 猎犬 (Bloodhound)</div>
+                    <div class="char-role">流亡者核心处决官</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 主线击毙</span>
+                </div>
+                <div class="char-story">
+                  <strong>猎犬（Bloodhound）</strong>是原本被关押在罗斯福岛的重刑犯，暴动后成为艾米琳麾下最凶残的先锋，率部袭击疾控中心总部以抢夺病毒样本；<strong>铁锤（The Hammer）</strong>则是镇守罗斯福岛港口码头的巨型大锤重甲首领，两人均在玩家进攻过程中被击毙。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联任务：疾控中心总部 / 罗斯福岛</span>
+                  <span>定位：流亡者狂热前锋</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="audio-log">
+            <div class="audio-log-header">▶ ISAC 截获流亡者广播 // 艾米琳·肖的布道</div>
+            <div class="audio-log-quote">
+              “他们站在桥对面，看着我的孩子在泥水里断气，看着我们像牲口一样腐烂。他们以为竖起一道铁丝网就能把罪孽挡在外面？不……每一滴流进波托马克河的血，都会变成烧穿他们喉咙的火！”
+            </div>
+            <div class="audio-log-source">—— 艾米琳·肖，罗斯福岛隔离区暴动前夜</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 07. The True Sons -->
+      <article class="faction-dossier" id="faction-truesons" data-category="dc-hostile" style="--faction-color: var(--truesons-blue);">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <line x1="2" y1="9" x2="22" y2="9"></line>
+                <line x1="2" y1="15" x2="22" y2="15"></line>
+                <polygon points="7 6.5 8 6.5 7.5 7.5"></polygon>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>真实之子 <span class="faction-en-name">The True Sons</span></h3>
+              <div class="faction-motto">“同情心害死了美利坚——唯有刺刀、铁血与绝对服从能重建帝国”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>核心据点：</strong>美国国会大厦 (Capitol Building)</span>
+            <span class="meta-pill"><strong>标志色彩：</strong>涂污星条旗与军用迷彩</span>
+            <span class="meta-pill"><strong>创立领袖：</strong>安东·瑞奇微将军 (Gen. Antwon Ridgeway)</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>起源与来历：从JTF精锐守军到军国主义法西斯军团</h4>
+            <div class="lore-text">
+              <p>
+                <strong>真实之子（The True Sons）</strong>是华盛顿特区本土三大敌对派系中装备最精良、训练最正规、战术最严密的准军事独裁集团。其前身正是驻防华盛顿特区的<strong>JTF主力部队与陆军国民警卫队</strong>。
+              </p>
+              <p>
+                该派系的灵魂人物<strong>安东·瑞奇微（Antwon Ridgeway）</strong>原本是一名战功赫赫、极度崇尚纪律的美军高级军官。在疫情爆发初期，瑞奇微奉命维持特区秩序并接管罗斯福岛隔离区。面对濒临崩溃的医疗物资与不断涌入的难民，瑞奇微得出结论：“软弱的民主宪政与人道主义慈悲正在害死所有人，唯有实行无情的军事独裁，优先保障军队生存、淘汰老弱病残，美国才能活下去。”为此，他不仅下令封死罗斯福岛任由平民饿死（直接制造了后来的流亡者危机），更在部下军官出于良知私自向隔离区运送药品时，当众拔枪将该名JTF军官处决！
+              </p>
+              <p>
+                瑞奇微的暴行震惊了JTF最高指挥部，宪兵将其逮捕并关押进军事监狱等待审判。然而，大批同样对JTF软弱无能感到失望、盲目崇拜瑞奇微铁腕作风的官兵发动了武装兵变，劫狱救出瑞奇微，随后屠杀了基地内所有拒绝效忠的JTF同僚，并攻占了象征美国民主宪政巅峰的<strong>国会大厦（Capitol Building）</strong>。他们撕毁旧有的JTF臂章，在涂成褐红色的星条旗上建立起崇尚社会达尔文主义的军阀政权——<strong>真实之子</strong>。
+              </p>
+              <p>
+                真实之子不仅占领了航空航天博物馆、林肯纪念堂与观点博物馆，还强行重启了CERA在暗区封存的失败抗病毒化学药剂<strong>DC-62</strong>，将其改装为致命的化学毒气迫击炮，悍然轰炸了手无寸铁的城堡聚落（Castle Settlement）。在瑞奇微死后，真实之子内部分裂为以<strong>弗雷德里克·刘易斯上尉（Capt. Lewis）</strong>为首的良知改良派，以及以<strong>彼得·安德森将军（Gen. Anderson）</strong>为首的投降派，后者最终在第10赛季将真实之子主力并入了黑色獠牙麾下。
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>典型兵种与战术体系</h4>
+            <div class="unit-grid">
+              <div class="unit-card">
+                <div class="unit-title">重装榴弹手 (Tank / Grenadier) <span class="unit-role-tag">M32转轮榴弹</span></div>
+                <div class="unit-desc">身披全套重型防爆装甲，手持M32六连发转轮榴弹发射器，能够在远距离对特工掩体进行不间断的地毯式轰炸。</div>
+              </div>
+              <div class="unit-card">
+                <div class="unit-title">泡沫控制兵 (Immobilizer) <span class="unit-role-tag">防暴硬化泡沫</span></div>
+                <div class="unit-desc">背负高压化学罐，喷射原本用于镇暴的速干型高分子硬化泡沫（Riot Foam），一旦命中会将特工死死粘在原地无法移动或找掩体。</div>
+              </div>
+              <div class="unit-card">
+                <div class="unit-title">重机枪架设兵与RPG手 <span class="unit-role-tag">火力压制网</span></div>
+                <div class="unit-desc">遵循标准美军步兵班组战术，利用重机枪正面架枪压制特工抬头，同时由侧翼霰弹突击兵与火箭筒手完成包抄合围。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>真实之子核心人物全档案</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">安东·瑞奇微将军 (Gen. Antwon Ridgeway)</div>
+                    <div class="char-role">真实之子缔造者与最高独裁官 / 前JTF指挥官</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 国会大厦击毙</span>
+                </div>
+                <div class="char-story">
+                  华盛顿特区一切乱象的罪魁祸首之一：正是他的冷血封锁逼出了流亡者，又是他的武装叛乱抽空了JTF。瑞奇微坚信自己是挽救美国的“凯撒”，在特区建立劳改营、公开处决异见者，并下令用DC-62毒气屠杀城堡聚落。在主线最终章，玩家特工利用防空导弹轰开国会大厦大门，在议会大厅与瑞奇微展开决战并将其击毙（其遗留的碎裂防弹衣可合成为奇特胸甲<strong>“瑞奇微的骄傲 Ridgeway's Pride”</strong>）。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联要塞：国会大厦 (Capitol Building)</span>
+                  <span>标志遗物：奇特胸甲“瑞奇微的骄傲”</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">弗雷德里克·刘易斯上尉 (Capt. Fredrick Lewis)</div>
+                    <div class="char-role">真实之子改良派领袖 / 第9赛季核心目标</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 遭黑色獠牙灭口</span>
+                </div>
+                <div class="char-story">
+                  第9赛季《隐秘同盟（Hidden Alliance）》的核心人物。与嗜血的瑞奇微不同，刘易斯上尉当初加入真实之子是真心希望能保护市民。在目睹瑞奇微滥用DC-62以及继任者安德森将军企图将部队卖给黑色獠牙后，刘易斯率领忠于自己的士兵脱离安德森，在杰斐逊贸易中心主动与玩家特工及凯尔索接触并达成和解。然而在随后的黑幕行动中，黑色獠牙突袭现场将这位极具人格魅力的军官残忍射杀。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联赛季：Y4 第9赛季《隐秘同盟》</span>
+                  <span>立场：觉醒并试图与SHD结盟的良知军人</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">彼得·安德森将军 (Gen. Peter Anderson)</div>
+                    <div class="char-role">真实之子继任总司令 / 第10赛季终极目标</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 并入黑色獠牙</span>
+                </div>
+                <div class="char-story">
+                  第10赛季《权力代价（Price of Power）》主目标。瑞奇微死后，安德森将军收拢了真实之子残部。为了对抗SHD特工，他彻底抛弃了真实之子所谓的“本土爱国”口号，在五角大楼核电站与黑色獠牙最高领袖娜塔莉亚·索科洛娃正式结盟，将真实之子整编为黑色獠牙的仆从军，并在混战中搭乘直升机全身而退。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联赛季：Y4 第10赛季《权力代价》</span>
+                  <span>行动地点：五角大楼达尔帕实验室 / 核电站</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">卡尔中尉、韦德军士长、基茨少校、布鲁克斯上尉</div>
+                    <div class="char-role">真实之子前线战区指挥官</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 主线击毙</span>
+                </div>
+                <div class="char-story">
+                  瑞奇微麾下的四员悍将：<strong>韦德军士长（Master Sgt. Wade）</strong>把守观点博物馆，切断SHD通讯广播；<strong>基茨少校（Major Keates）</strong>占据航空航天博物馆，负责导弹制造；<strong>卡尔中尉（Lt. Kelly）</strong>在美利坚历史博物馆负责押运DC-62生化药剂；<strong>布鲁克斯上尉（Capt. Brooks）</strong>驻守林肯纪念堂地下掩体。四人皆被玩家逐一拔除。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联任务：观点 / 航天 / 历史博物馆 & 林肯纪念堂</span>
+                  <span>职能：真实之子四大军事支柱</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 08. Black Tusk (BTSU) -->
+      <article class="faction-dossier" id="faction-blacktusk" data-category="dc-hostile" style="--faction-color: var(--blacktusk-gold);">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
+                <line x1="12" y1="22" x2="12" y2="15.5"></line>
+                <polyline points="22 8.5 12 15.5 2 8.5"></polyline>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>黑色獠牙 <span class="faction-en-name">Black Tusk / BTSU</span></h3>
+              <div class="faction-motto">“旧政府只是我们的提线木偶——欢迎来到寡头财阀与全自动战争的新纪元”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>核心据点：</strong>潮汐盆地 (Tidal Basin) / 白橡木营地</span>
+            <span class="meta-pill"><strong>最高统帅：</strong>娜塔莉亚·索科洛娃 (Natalya Sokolova)</span>
+            <span class="meta-pill"><strong>特种分队：</strong>BTSU (黑色獠牙特种部队)</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>起源与来历：跨国军工寡头操控的终极私人军团</h4>
+            <div class="lore-text">
+              <p>
+                当玩家特工浴血奋战攻克国会大厦、以为终于解放华盛顿特区的那一刻，伴随着震耳欲聋的防空警报与全城SHD网络瘫痪，无数架黑鹰直升机与巨型军用气垫船从波托马克河逆流而上，在短短数小时内全面接管了特区各大战略要地——这就是《全境封锁2》真正的终局宿敌：<strong>黑色獠牙（Black Tusk）</strong>。
+              </p>
+              <p>
+                与其他由幸存者拼凑而成的本土派系截然不同，黑色獠牙是一支在“绿毒”爆发前就已秘密筹建完毕的<strong>超规格私人军事承包商（PMC）</strong>。其背后的真正金主是以<strong>索科洛夫工业（Sokolov Concern）</strong>CEO<strong>娜塔莉亚·索科洛娃（Natalya Sokolova）</strong>为首的跨国能源、军工与科技寡头联盟，并与美国国土安全部长<strong>卡尔文·麦克马努斯（Calvin McManus）</strong>及奥尔蒂斯机器人公司（Ortiz Robotics）深度绑定。
+              </p>
+              <p>
+                早在疫情爆发前，这群寡头就预见（甚至顺水推舟利用）了国家级灾难，提前策划了“政权更迭”：他们暗杀了拒绝合作的门德斯总统，扶植贪生怕死的安德鲁·艾利斯上位，再由艾利斯以总统名义签署密令，宣布SHD特工为“非法武装”并授权黑色獠牙进驻华盛顿。黑色獠牙拥有超越美军现役水平的自动化武器库——包括搭载狙击电磁炮、榴弹与旋转机刃的<strong>“机械战狗（Warhounds）”</strong>、履带式迷你坦克、自爆无人机群以及治疗支援平台，其特种部队（BTSU）更配备了与SHD同源的高阶战术科技，甚至大举招募叛变SHD特工与前代幸存者军队（LMB）残部，企图彻底抹除国土战略局。
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>典型兵种与自动化机械军团</h4>
+            <div class="unit-grid">
+              <div class="unit-card">
+                <div class="unit-title">机械战狗 (Warhound) <span class="unit-role-tag">四足无人装甲兽</span></div>
+                <div class="unit-desc">分为重机枪旋转扫射型、三连发高爆榴弹型以及一击破甲的高能电磁狙击型，阵亡时还会释放大范围EMP电磁脉冲。</div>
+              </div>
+              <div class="unit-card">
+                <div class="unit-title">无人机操作员与医疗兵 <span class="unit-role-tag">高阶科技压制</span></div>
+                <div class="unit-desc">不间断释放高速双发自爆无人机騷扰掩体，医疗兵则架设范围极广的纳米治疗平台并能使用除颤器复活阵亡的黑色獠牙精锐。</div>
+              </div>
+              <div class="unit-card">
+                <div class="unit-title">重装支援蜂巢兵 (Tank / Chungus) <span class="unit-role-tag">自愈重甲巨兽</span></div>
+                <div class="unit-desc">手持加特林机枪，背部搭载自动修复装甲的刺针/治疗蜂巢，若不先击毁其背部背包，他会在战斗中瞬间回满全部护甲。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>黑色獠牙核心人物全档案</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">娜塔莉亚·索科洛娃 (Natalya Sokolova)</div>
+                    <div class="char-role">黑色獠牙最高幕后统帅 / 索科洛夫工业CEO</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 幕后主脑</span>
+                </div>
+                <div class="char-story">
+                  俄罗斯军工巨头索科洛夫家族的继承人，黑色獠牙真正的女皇。在前四季中她一直隐居幕后，通过无线电向巴顿·谢弗下达指令；自第9至第11赛季起，娜塔莉亚正式走到台前：她收编了安德森将军的真实之子残部，与国土安全部长卡尔文·麦克马努斯结成铁盟，亲自指挥对白宫与城堡聚落的突袭，并企图利用猎人计划与奥尔蒂斯技术建立完全由寡头统治的北美新秩序。
+                </div>
+                <div class="char-meta-footer">
+                  <span>身份：Sokolov Concern 首席执行官</span>
+                  <span>核心盟友：卡尔文·麦克马努斯、猎人部队</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">巴顿·谢弗 (Bardon Schaeffer)</div>
+                    <div class="char-role">黑色獠牙特种部队 (BTSU) 最高前线指挥官</div>
+                  </div>
+                  <span class="status-badge status-captured">CAPTURED 昏迷拘留中</span>
+                </div>
+                <div class="char-story">
+                  前美军特种部队老兵，黑色獠牙在华盛顿与纽约战场的灵魂指挥官。谢弗性格极其务实、满嘴黑色幽默，经常在通讯里吐槽手下（如双足飞龙）的愚蠢以及SHD特工的难缠。他曾暗中资助鬣狗扰乱特区，并在第3赛季《隐秘议程》中联合叛变特工刘菲前往科尼岛（Coney Island）。然而在科尼岛终局战中，谢弗遭到麦克马努斯派出的猎人首领“招募官”伏击重伤，头部受创陷入植物人般的长期昏迷，目前被锁在白宫医疗室由SHD严密看管。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联赛季：第3赛季《隐秘议程》主目标</span>
+                  <span>现状：白宫病房昏迷囚禁中</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">“双足飞龙” (Wyvern)</div>
+                    <div class="char-role">潮汐盆地要塞指挥官</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 潮汐盆地击毙</span>
+                </div>
+                <div class="char-story">
+                  镇守黑色獠牙大本营<strong>潮汐盆地（Tidal Basin）</strong>气垫船基地的女性指挥官。性格狂妄、冷血且极度偏执。当玩家特工攻破气垫船防线、巴顿·谢弗命令她立即携带广谱抗病毒药物撤离时，输急眼的“双足飞龙”公然抗命，将抗病毒药物绑在多管导弹发射器上准备直接炸毁白宫同归于尽，最终在发射井平台被玩家特工击毙。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联要塞：潮汐盆地 (Tidal Basin)</span>
+                  <span>特征：狂躁抗命的战争狂人</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">莫罗佐娃中校 & 黑暗时刻掠夺战首领</div>
+                    <div class="char-role">八人掠夺战（Raid）军团统帅</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 掠夺战击毙</span>
+                </div>
+                <div class="char-story">
+                  在两大八人团队掠夺战（Raid）中坐镇的黑色獠牙王牌：<strong>《黑暗时刻行动》</strong>中占领华盛顿国家机场的重装狂人“大块头（Boomer）”、毒气专家“鼬鼠（Weasel）”、双子机械战狗“巴迪与露西（Buddy & Lucy）”及巨型无人机母舰“剃刀背（Razorback）”；以及<strong>《铁驹行动》</strong>中盘踞联合钢铁厂、指挥重装甲列车炮火轰击特工的冷酷女指挥官<strong>埃莉诺·莫罗佐娃中校（Lt. Col. Morozova）</strong>。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联任务：黑暗时刻行动 / 铁驹行动 (8人Raid)</span>
+                  <span>战术定位：黑色獠牙最高规格重武器集群</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ====================================================================
+           CHAPTER III: NEW YORK & BROOKLYN DLC HOSTILE FACTIONS
+           ==================================================================== -->
+      <div class="chapter-banner" data-category="ny-dlc">
+        <div class="chapter-title-wrap">
+          <span class="chapter-code">CHAPTER 03 // WARLORDS OF NEW YORK & BATTLE FOR BROOKLYN</span>
+          <h2 class="chapter-title">纽约与布鲁克林DLC宿敌派系：烈火、暴徒与白衣雇佣兵的进化</h2>
+        </div>
+      </div>
+
+      <!-- 09. The Cleaners & Purple Flame -->
+      <article class="faction-dossier" id="faction-cleaners" data-category="ny-dlc" style="--faction-color: var(--cleaner-purple);">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>净化者 <span class="faction-en-name">The Cleaners (WONY & Brooklyn Evolution)</span></h3>
+              <div class="faction-motto">“唯有烈火能根除瘟疫——从曼哈顿的凝固汽油，到吞噬布鲁克林的腐蚀紫火”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>登场DLC：</strong>《纽约军阀》 & 《布鲁克林之战》</span>
+            <span class="meta-pill"><strong>核心据点：</strong>搁浅油轮 (Stranded Tanker) / 布鲁克林H5炼油厂</span>
+            <span class="meta-pill"><strong>终极科技：</strong>腐蚀性紫火 (Purple Flame)</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>来历与两度进化：从乔·费罗的遗泽到“紫火”危机</h4>
+            <div class="lore-text">
+              <p>
+                <strong>净化者（The Cleaners）</strong>是贯穿《全境封锁》初代与二代双DLC的最具视觉冲击力的极端防疫组织。其成员最初由纽约市的环卫工人、垃圾车司机、消防员和市政管道工组成。在初代疫情爆发时，由于环卫工人在毫无防护的情况下奉命清理感染区垃圾而大批惨死（包括创始人<strong>乔·费罗 Joe Ferro</strong>的妻子），费罗彻底失去理智，认为政府与医生全是废物，<strong>“只要把所有感染者、疑似感染者乃至整座城市全部用喷火器烧成灰烬，病毒就会彻底消失”</strong>。
+              </p>
+              <p>
+                <strong>第一阶段进化（《纽约军阀》DLC）：</strong>乔·费罗在初代被击毙后，净化者一度群龙无首。此时，亚伦·基纳麾下的叛变特工、前麻省理工学院（MIT）化学工程师<strong>薇薇安·康利（Vivian Conley）</strong>找上了他们。康利没有强行改变净化者的狂热信仰，而是将他们尊为“拯救纽约的英雄”，并利用搁浅油轮（Stranded Tanker）的巨量原油储备，为净化者研发了高爆凝固汽油、投弹轰炸无人机以及远程喷火塔，使这群前环卫工人进化为战术素养极高的化学纵火军团。
+              </p>
+              <p>
+                <strong>第二阶段进化（《布鲁克林之战》DLC）：</strong>在薇薇安·康利死后数月，净化者不仅没有消亡，反而在新指挥官<strong>贾辛斯基（Jasinski）</strong>的统领下跨过东河，大举入侵原本和平的布鲁克林（Brooklyn Heights 与 DUMBO区）。在布鲁克林的<strong>H5炼油厂（H5 Refinery）</strong>中，净化者研发出了令SHD特工闻风丧胆的全新化学武器——<strong>“紫火（Purple Flame）”</strong>。这种诡异的紫蓝色火焰掺入了强腐蚀性工业氧化剂，不仅能造成剧烈的高温灼烧，更会叠加<strong>“装甲腐蚀（Corrosion）”</strong>效果，直接融化特工的防弹护甲与掩体结构！他们甚至捕获并改装了黑色獠牙的机械战狗，造出了喷射紫火的实验型机械兽<strong>“紫罗兰（Violet）”</strong>，并利用特效师制作叛变特工的Deepfake深度伪造影像进行心理战。
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>净化者核心人物全档案</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">乔·费罗 (Joe Ferro) [精神图腾]</div>
+                    <div class="char-role">净化者初代创始人 / 已故烈士</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 初代已阵亡</span>
+                </div>
+                <div class="char-story">
+                  虽然乔·费罗早在初代中城基地就被特工击毙，但在《全境封锁2：纽约军阀》与《布鲁克林之战》中，他已被所有净化者神化为殉道圣徒。净化者士兵在冲锋时仍高呼“为了乔·费罗（For Joe Ferro）”，薇薇安·康利正是利用对费罗遗志的推崇才彻底收服了这支狂热大军。
+                </div>
+                <div class="char-meta-footer">
+                  <span>前身份：纽约市政环卫局工人</span>
+                  <span>地位：净化者永恒的精神图腾</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">薇薇安·康利 (Vivian Conley)</div>
+                    <div class="char-role">《纽约军阀》净化者最高统帅 / 第一波叛变特工</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 搁浅油轮击毙</span>
+                </div>
+                <div class="char-story">
+                  详见下文【叛变特工网络】章节。前CERA化学专家兼SHD特工，因丈夫死于暗区官僚封锁而叛变，将搁浅油轮改造成净化者的海上炼油堡垒，最终在油轮爆炸火海中与玩家特工决战身亡。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联任务：《纽约军阀》搁浅油轮</span>
+                  <span>掉落奇特：帝国王朝枪套 (Imperial Dynasty)</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">贾辛斯基指挥官 (Commander Jasinski) & “紫罗兰”</div>
+                    <div class="char-role">《布鲁克林之战》净化者远征军统帅</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA H5炼油厂击毙</span>
+                </div>
+                <div class="char-story">
+                  《布鲁克林之战》DLC中率领净化者跨过东河入侵布鲁克林的幕后指挥官。他占领了H5炼油厂，大规模量产具有破甲腐蚀特性的“紫火”燃料，并部署了喷射紫火的改装机械战狗Boss<strong>“紫罗兰（Violet）”</strong>，企图将布鲁克林大桥聚落彻底化为焦土，最终被玩家特工与霍斯金斯联手摧毁。
+                </div>
+                <div class="char-meta-footer">
+                  <span>登场：《布鲁克林之战》DLC · H5炼油厂</span>
+                  <span>核心威胁：腐蚀紫火与改装战狗</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 10. The Rikers & The Rat Queen -->
+      <article class="faction-dossier" id="faction-rikers" data-category="ny-dlc" style="--faction-color: var(--riker-crimson);">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>赖克斯帮 <span class="faction-en-name">The Rikers (Wall Street & Brooklyn)</span></h3>
+              <div class="faction-motto">“囚笼已经碎了——昔日的阶下囚，如今是华尔街与布鲁克林的典狱长”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>登场DLC：</strong>《纽约军阀》 & 《布鲁克林之战》</span>
+            <span class="meta-pill"><strong>核心据点：</strong>华尔街证券交易所 / 布鲁克林艺术博物馆</span>
+            <span class="meta-pill"><strong>代表首领：</strong>詹姆斯·德拉戈夫 / “鼠后”莎拉·莫雷蒂</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>来历与演变：从越狱重刑犯到军阀化的城市黑帮帝国</h4>
+            <div class="lore-text">
+              <p>
+                <strong>赖克斯帮（The Rikers）</strong>源于纽约东河上的赖克斯岛监狱（Rikers Island）。在初代疫情爆发时，政府撤走了监狱看守，将数千名重刑犯锁在岛上任其自生自灭。魅力超群的黑帮女头目<strong>拉雷·巴雷特（LaRae Barrett）</strong>率领囚犯成功越狱并杀回曼哈顿，以虐杀警察（NYPD）和JTF士兵为乐（刘菲的亲妹妹海伦也是死于赖克斯帮之手）。
+              </p>
+              <p>
+                在拉雷·巴雷特于初代列克星敦活动中心被特工击毙后，赖克斯帮分裂成数个互殴的小团伙。直到《纽约军阀》时期，叛变特工<strong>詹姆斯·德拉戈夫（James Dragov）</strong>——一位出身警察世家却早已腐败透顶的前缉毒局探员，利用自己昔日在监狱和黑道的人脉，以绝对的力量和源源不断的军火收服了所有赖克斯帮派系。德拉戈夫将大本营设在资本主义的象征——<strong>华尔街纽约证券交易所（Wall Street）</strong>，将赖克斯帮改造成一支装备防暴盾牌、重型机枪架与高强度纪律的准军事犯罪集团，为亚伦·基纳掌控整个曼哈顿下城的物资命脉。
+              </p>
+              <p>
+                而在<strong>《布鲁克林之战》DLC</strong>中，趁着净化者进攻布鲁克林造成的混乱，赖克斯帮在新头目<strong>丹佛斯（Danvers）</strong>以及外号<strong>“鼠后（The Rat Queen）”的莎拉·莫雷蒂（Sarah Moretti）</strong>率领下大举杀入布鲁克林，猛攻大桥聚落并盘踞在布鲁克林艺术博物馆（The Art Museum）。
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>赖克斯帮核心人物全档案</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">詹姆斯·德拉戈夫 (James Dragov)</div>
+                    <div class="char-role">《纽约军阀》赖克斯帮新教父 / 第一波叛变特工</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 华尔街击毙</span>
+                </div>
+                <div class="char-story">
+                  详见下文【叛变特工网络】章节。身穿全身重型防暴装甲、手持防爆盾牌与重机枪的巨汉特工，与贴身护卫<strong>“公爵（Ron 'Duke'）”</strong>及<strong>“关节（Knuckles）”</strong>组成坚不可摧的三人盾墙，在华尔街大厅被玩家特工击毙。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联任务：《纽约军阀》华尔街</span>
+                  <span>掉落奇特：子弹王者轻机枪 (Bullet King)</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">“鼠后”莎拉·莫雷蒂 (The Rat Queen - Sarah Moretti)</div>
+                    <div class="char-role">《布鲁克林之战》赖克斯帮核心首领</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 艺术博物馆击毙</span>
+                </div>
+                <div class="char-story">
+                  《布鲁克林之战》DLC中最具悲剧反转色彩的反派首领。在疫情爆发初期，莎拉·莫雷蒂原本是一名充满善意的普通平民，甚至在第一批赖克斯帮逃犯进入布鲁克林时主动向他们提供食物与庇护。然而残酷的末日背叛与暴力彻底扭曲了她的心灵，她一步步吞噬并踩着昔日暴徒的尸骨上位，化身为冷血残忍的<strong>“鼠后（The Rat Queen）”</strong>。她率部围攻大桥聚落，最终在布鲁克林艺术博物馆的多阶段终端破解决战中被玩家特工击毙。
+                </div>
+                <div class="char-meta-footer">
+                  <span>登场：《布鲁克林之战》DLC · 艺术博物馆</span>
+                  <span>人物弧光：从善良救助者黑化为残暴帮派女皇</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">丹佛斯 (Danvers)</div>
+                    <div class="char-role">布鲁克林赖克斯帮前线头目</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 布鲁克林击毙</span>
+                </div>
+                <div class="char-story">
+                  与“鼠后”共同策划布鲁克林劫掠行动的赖克斯帮指挥官，趁净化者以紫火吸引SHD注意力之际，率领暴徒从侧翼偷袭平民防线。
+                </div>
+                <div class="char-meta-footer">
+                  <span>登场：《布鲁克林之战》DLC</span>
+                  <span>定位：赖克斯帮突袭指挥官</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 11. Last Man Battalion Remnants (White Tusk) -->
+      <article class="faction-dossier" id="faction-lmb" data-category="ny-dlc" style="--faction-color: #cbd5e1;">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"></path>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>幸存者军队残部 / 白色獠牙 <span class="faction-en-name">Last Man Battalion (LMB) Remnants / White Tusk</span></h3>
+              <div class="faction-motto">“查尔斯·布利斯虽死，但白衣精锐的枪口已换上黑色獠牙的徽章”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>前身：</strong>初代纽约华尔街私人雇佣军 LMB</span>
+            <span class="meta-pill"><strong>二代归宿：</strong>整编为黑色獠牙传奇难度精锐（白色獠牙）</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>来历与归宿：从联合国大厦败退到传奇据点的白色死神</h4>
+            <div class="lore-text">
+              <p>
+                在初代《全境封锁》中，由<strong>查尔斯·布利斯中校（Lt. Col. Charles Bliss）</strong>创立的<strong>幸存者军队（Last Man Battalion, LMB）</strong>是受雇于华尔街亿万富翁的顶级私人军事公司。疫情爆发后，华尔街富豪抛弃了LMB独自逃离，震怒的布利斯中校遂率部接管曼哈顿高地，并与第一波叛变特工亚伦·基纳短暂结盟，最终在联合国大会堂连同直升机一起被初代特工击落身亡。
+              </p>
+              <p>
+                到了《全境封锁2》与《纽约军阀》时期，玩家在录音档案与传奇难度据点（Legendary Strongholds：区域联盟体育馆、罗斯福岛、国会大厦、潮汐盆地、曼宁国家动物园）中揭开了LMB残部的最终下落：<strong>黑色獠牙（Black Tusk）出重金收编了所有幸存的LMB精锐老兵与军官！</strong>这群身经百战的前LMB雇佣兵保留了他们在纽约寒冬中标志性的<strong>纯白雪地迷彩涂装与白色贝雷帽</strong>，结合黑色獠牙最尖端的刺针蜂巢背包与无人机技术，组成了游戏内战斗力最恐怖的传奇精锐部队——被玩家社区敬畏地称为<strong>“白色獠牙（White Tusk）”</strong>。
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ====================================================================
+           CHAPTER IV: ROGUE AGENTS NETWORK & SEASONAL MANHUNTS
+           ==================================================================== -->
+      <div class="chapter-banner" data-category="rogue">
+        <div class="chapter-title-wrap">
+          <span class="chapter-code">CHAPTER 04 // ANNA PROTOCOL & ROGUE NETWORK</span>
+          <h2 class="chapter-title">叛变特工网络、纽约四大军阀与赛季追捕全史</h2>
+        </div>
+      </div>
+
+      <!-- 12. Aaron Keener & The Four Warlords -->
+      <article class="faction-dossier" id="faction-rogues" data-category="rogue" style="--faction-color: var(--anna-red);">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 8v4"></path>
+                <path d="M12 16h.01"></path>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>亚伦·基纳与纽约四大军阀 <span class="faction-en-name">Aaron Keener & The Warlords of New York</span></h3>
+              <div class="faction-motto">“警告：侦测到特工脱离国土战略局网络——已启动 ANNA 叛变协议”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>终极据点：</strong>纽约自由岛 (Liberty Island)</span>
+            <span class="meta-pill"><strong>核心AI系统：</strong>ANNA (安娜系统)</span>
+            <span class="meta-pill"><strong>生化武器：</strong>日蚀病毒 (Eclipse Virus)</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>起源与意识形态：从暗区惨剧到“第一名叛变者”的惊天棋局</h4>
+            <div class="lore-text">
+              <p>
+                <strong>叛变特工（Rogue Agents）</strong>并非天生的恶魔，他们每一个人曾经都是通过了最严苛心理与战术选拔的国土战略局（SHD）精英。这一切的源头，要追溯到初代纽约疫情爆发初期的<strong>“第一波特工（First Wave）”</strong>。
+              </p>
+              <p>
+                当时的王牌特工<strong>亚伦·基纳（Aaron Keener，代号“先锋 Vanguard”）</strong>在被征召前曾是一名极具决断力的期货交易员与前军方情报人员。在曼哈顿暗区（Dark Zone）建立之初，基纳奉命保护一批躲在安全屋内的平民妇女与儿童。当重武装暴徒围攻安全屋、弹药即将耗尽时，基纳向JTF指挥部发出了绝望的增援请求，然而JTF高层出于“止损”考虑，不仅拒绝派出近在咫尺的援军，反而直接下令锁死暗区大门撤离！基纳被迫眼睁睁看着自己拼命保护的平民在火海中全部惨死，自己仅凭一己之力杀出重围。那一刻，基纳彻底看穿了所谓“第51号总统指令”与联邦政府的虚伪本质——在掌权者眼中，无论是平民还是特工，都只是随时可以丢弃的消耗品。
+              </p>
+              <p>
+                在初代结尾，基纳夺取了绿毒制造者<strong>戈登·阿姆赫斯特博士（Dr. Gordon Amherst）</strong>的实验室与基因3D打印机，研制出了致命的改良型空气传播生化武器——<strong>“日蚀（Eclipse）”</strong>。到了《全境封锁2：纽约军阀》DLC中，基纳在曼哈顿下城招募了四名同样对政府彻底绝望的前SHD特工（薇薇安·康利、詹姆斯·德拉戈夫、哈维尔·卡吉卡、西奥·帕内尔），分别控制了净化者、赖克斯帮与地下工程网，并用一枚装填“日蚀”毒气的导弹彻底毁灭了曼哈顿市政厅JTF总部。
+              </p>
+              <p>
+                <strong>《纽约军阀》自由岛决战与第六年惊天反转：</strong>在自由岛（Liberty Island）战役中，玩家特工摧毁了基纳瞄准黑色獠牙的“日蚀”导弹，并与基纳展开死斗。表面上，重伤的基纳在自由女神像脚下激活了手表的全球叛变信号后“气绝身亡”。然而，随着第5年《先锋（Vanguard）》与第6年《第一名叛变者（First Rogue）》赛季剧情的层层剥茧，全系列最大的反转正式揭晓——<strong>亚伦·基纳与天才黑客西奥·帕内尔根本没有死！</strong>他们利用帕内尔研发的高级全息视觉欺骗、假死药剂与ISAC数据篡改，在自由岛与市政厅演出了一场针对卡尔文·麦克马努斯（猎人主脑）和娜塔莉亚·索科洛娃（黑色獠牙统帅）的完美“假死金蝉脱壳”！
+              </p>
+              <p>
+                基纳很早就通过帕内尔黑入奥尔蒂斯机器人公司（Ortiz Robotics）的数据库，发现了麦克马努斯在ISAC系统中留有后门、并派遣猎人（Hunters）秘密清洗知情特工的惊天阴谋。只要特工还佩戴着受ISAC监控的橙色手表，就永远无法战胜麦克马努斯。因此，基纳与帕内尔启用了原本被废弃的另一套高自主性人工智能——<strong>ANNA（安娜）</strong>，在暗处组建不受猎人监控的抵抗网络，并在第6年主动走进白宫向玩家特工与曼尼“自首”关入牢房，以便在白宫内部协助玩家对抗麦克马努斯与黑色獠牙的终极总攻！
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>亚伦·基纳与纽约四大军阀核心档案</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">亚伦·基纳 (Aaron Keener - 代号“先锋”)</div>
+                    <div class="char-role">第一波传奇叛变特工 / ANNA叛变网络缔造者</div>
+                  </div>
+                  <span class="status-badge status-captured">CAPTURED 假死回归/白宫结盟</span>
+                </div>
+                <div class="char-story">
+                  全境封锁系列最具魅力的灵魂人物。智商极高、冷酷果决、极具心理操控力。他从最初因暗区惨案而憎恨体制的极端社会达尔文主义者，逐渐演变为最早洞察“麦克马努斯-索科洛娃-猎人计划”幕后阴谋的暗影棋手。在自由岛假死脱身后，他与帕内尔吸纳了艾拉妮·凯尔索，并在Y6S1主动进入白宫拘留室，引导玩家特工揭开国土安全部的黑幕。
+                </div>
+                <div class="char-meta-footer">
+                  <span>经典名言：“你还在听ISAC那个铁皮盒子的指令吗？”</span>
+                  <span>状态：假死复出，现于白宫战略合作</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">薇薇安·康利 (Vivian Conley)</div>
+                    <div class="char-role">纽约四大军阀之一 / 净化者统帅 / 前CERA化学工程师</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 搁浅油轮击毙</span>
+                </div>
+                <div class="char-story">
+                  麻省理工学院（MIT）化学工程高材生，前CERA能源专家兼第一波SHD特工。在疫情初期，她的丈夫被困在暗区隔离墙内急需救援，薇薇安苦苦哀求JTF指挥官开门，却遭到官僚主义的冷酷拒绝，最终只能隔着铁丝网听着丈夫绝望死去。基纳向崩溃的她伸出援手，她随后接管了失去乔·费罗的净化者，将搁浅油轮改造成炼油厂，最终在油轮火海中被玩家特工击毙。
+                </div>
+                <div class="char-meta-footer">
+                  <span>领地：曼哈顿下城·两桥区 (Two Bridges)</span>
+                  <span>专长：凝固汽油与轰炸无人机</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">詹姆斯·德拉戈夫 (James Dragov)</div>
+                    <div class="char-role">纽约四大军阀之一 / 赖克斯帮统帅 / 前缉毒局探员</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 华尔街击毙</span>
+                </div>
+                <div class="char-story">
+                  出身于显赫的纽约警察世家，父亲是备受尊敬的老警长，但德拉戈夫在担任缉毒局（DEA）重案警探期间看透了司法体系的腐败——毒枭花钱就能脱罪，底层警员却要流血卖命。他在疫情前就已暗中收受黑帮贿赂、以暴制暴。被激活为SHD特工后，他在暗区与基纳一拍即合，凭借过硬的铁腕手段将越狱的赖克斯帮整编为自己的私人军队，盘踞华尔街证券交易所，最终在盾墙阵中被玩家攻破击毙。
+                </div>
+                <div class="char-meta-footer">
+                  <span>领地：曼哈顿下城·金融区 (Financial District)</span>
+                  <span>专长：重型防爆盾墙与军火后勤</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">哈维尔·卡吉卡 (Javier Kajika)</div>
+                    <div class="char-role">纽约四大军阀之一 / 地下暗杀幽灵 / 前秘密行动干员</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 巴特里公园击毙</span>
+                </div>
+                <div class="char-story">
+                  前美国政府黑衣特种部队（Black Ops）秘密刺客，曾在科索沃等海外战场执行不可告人的脏活。作为第一波SHD特工，他在暗区撤离时奉JTF指挥官大卫·霍金斯（David Hawkins）之命死守阵地等待救援直升机，结果霍金斯为了自己逃命直接下令放弃卡吉卡小队。大难不死的卡吉卡化身为复仇恶鬼，专门在地下隧道用钩爪、毒气与诡雷猎杀当年抛弃第一波特工的JTF军官，最终在钻地机基地被玩家击毙。
+                </div>
+                <div class="char-meta-footer">
+                  <span>领地：曼哈顿下城·巴特里公园 (Battery Park)</span>
+                  <span>专长：潜行暗杀、电击陷阱与近战弯刀</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">西奥·帕内尔 (Theo Parnell)</div>
+                    <div class="char-role">纽约四大军阀之一 / 天才黑客 / ANNA系统架构师</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 假死幸存/活跃</span>
+                </div>
+                <div class="char-story">
+                  极具天赋的计算机工程师、无人机专家与资深阴谋论者。他的父亲曾是一名试图揭露政府高官与寡头腐败的调查记者，结果被特勤局伪造成车祸灭口。帕内尔为了调查父亲死因加入SHD，在发现ISAC系统的监控本质后投靠基纳。在《纽约军阀》市政厅墓穴任务中，他用精妙绝伦的<strong>全息分身（Decoy）</strong>把玩家耍得团团转，并利用全息投影伪造了自己被爆头击毙的假象！实际上他一直活在幕后，不仅建立了<strong>布鲁克林大桥聚落</strong>，更在Y5/Y6赛季与《布鲁克林之战》DLC中全面协助凯尔索与玩家特工。
+                </div>
+                <div class="char-meta-footer">
+                  <span>领地：市政中心 / 布鲁克林大桥聚落</span>
+                  <span>招牌技能：全息诱饵 (Holographic Decoy)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 13. Faye Lau, Alani Kelso & Seasonal Manhunts -->
+      <article class="faction-dossier" id="faction-manhunts" data-category="rogue" style="--faction-color: #f43f5e;">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="22" y1="12" x2="18" y2="12"></line>
+                <line x1="6" y1="12" x2="2" y2="12"></line>
+                <line x1="12" y1="6" x2="12" y2="2"></line>
+                <line x1="12" y1="22" x2="12" y2="18"></line>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>刘菲的孤注一掷与历代赛季追捕目标 <span class="faction-en-name">Faye Lau & Seasonal Manhunt Prime Targets</span></h3>
+              <div class="faction-motto">“有时为了刺杀盘踞在王座上的叛国贼，你必须先戴上叛徒的王冠”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>涵盖跨度：</strong>第1赛季《暗影潮汐》至 第6年《第一名叛变者》</span>
+            <span class="meta-pill"><strong>核心反转：</strong>刘菲暗杀艾利斯总统 / 凯尔索战略叛变</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>核心悲剧史诗：为什么初代的绝对盟友刘菲（Faye Lau）选择了叛变？</h4>
+            <div class="lore-text">
+              <p>
+                在初代《全境封锁》中，<strong>刘菲（Faye Lau）</strong>是陪伴玩家走完全程的灵魂人物：她在开篇直升机爆炸中失去了一只眼睛、全身多处骨折，却依然拄着拐杖在邮局行动基地统筹全局。然而到了《全境封锁2：纽约军阀》结局，当玩家击败基纳后，刘菲却突然关闭了SHD橙色腕表，转投死敌<strong>黑色獠牙（Black Tusk）</strong>！这一幕曾让无数老玩家震惊甚至愤怒。
+              </p>
+              <p>
+                然而，直到第4赛季《值勤终点（End of Watch）》的加密录音全部公开，刘菲那令人心碎的<strong>“孤狼死士计划”</strong>才大白于天下：在《纽约军阀》前夕，刘菲唯一的至亲——妹妹<strong>海伦·刘（Heather Lau）</strong>被赖克斯帮残忍杀害；紧接着，基纳用日蚀病毒摧毁了市政厅，而联邦总统安德鲁·艾利斯却与黑色獠牙狼狈为奸。刘菲痛彻心扉地意识到：<strong>只要叛国总统艾利斯还活着、还顶着“合法三军统帅”的名义向黑色獠牙输送利益，忠于宪法的SHD特工在程序上就永远无法接近并制裁艾利斯！</strong>
+              </p>
+              <p>
+                于是，刘菲做出了一个自我毁灭式的决定：她独自背负起“叛徒”的千古骂名，甚至在被老友罗伊·贝尼特斯撞破时含泪开枪杀死了贝尼特斯以向黑色獠牙纳投名状。凭借前SHD纽约指挥官的身份，她成功赢得了黑色獠牙统帅娜塔莉亚·索科洛娃与巴顿·谢弗的信任，被派往戒备森严的<strong>白橡木营地（Camp White Oak）</strong>担任艾利斯总统的贴身护卫。在玩家特工发起总攻的混乱时刻，刘菲在总统安全屋内拔出手枪，<strong>面对面一枪击毙了叛国总统安德鲁·艾利斯</strong>，完成了任何“守规矩的SHD特工”都无法完成的锄奸使命！随后，心愿已了但罪孽深重的刘菲拒绝向玩家解释，在与玩家特工的决战中从容赴死，仅在给凯尔索的遗留加密磁带中留下了揭露黑色獠牙与政府高层勾结的铁证。
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>历代赛季追捕首领（Prime Targets）全档案</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">刘菲 (Faye Lau)</div>
+                    <div class="char-role">第4赛季《值勤终点》主目标 / 初代纽约SHD指挥官</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 白橡木营地阵亡</span>
+                </div>
+                <div class="char-story">
+                  忍辱负重的悲剧英雄。麾下四名叛变特工副官为：<strong>毒蛇（Viper - 布里奇特·道格拉斯，恰尔斯·布利斯中校之女）</strong>、<strong>红隼（Kestrel）</strong>、<strong>杂技演员（Acrobat）</strong>与<strong>马格努斯（Magnus）</strong>。刘菲以生命与名誉的代价除掉了叛国总统艾利斯，她的遗言直接促成了后来凯尔索的觉醒。
+                </div>
+                <div class="char-meta-footer">
+                  <span>决战地点：白橡木营地 (Camp White Oak)</span>
+                  <span>历史评价：以背叛之名行忠诚之事的孤勇者</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">“木星”莫莉·亨德森 (Molly "Jupiter" Henderson)</div>
+                    <div class="char-role">第1赛季《暗影潮汐》主目标 / 极端净化派叛变特工</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 罗斯福岛击毙</span>
+                </div>
+                <div class="char-story">
+                  第一波叛变特工。莫莉在疫情中目睹人性堕落，变得比净化者更加极端偏执。她率领四名以行星命名的叛变副官——<strong>海王星（Neptune）</strong>、<strong>金星（Venus）</strong>、<strong>土星（Saturn）</strong>与<strong>水星（Mercury）</strong>，接管了罗斯福岛的净化者分支，研发出了能够瘫痪一切电子设备的<strong>EMP电磁脉冲黏弹</strong>，最终在罗斯福岛被玩家击毙。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联赛季：第1赛季《暗影潮汐 (Shadow Tide)》</span>
+                  <span>解锁技能：EMP电磁黏弹</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">“大黄蜂”卡特·勒鲁 (Carter "Hornet" Leroux)</div>
+                    <div class="char-role">第2赛季《基纳的遗产》主目标 / 亚伦·基纳挚友</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 潮汐盆地击毙</span>
+                </div>
+                <div class="char-story">
+                  初代玩家在俄罗斯领事馆任务中曾亲手击败的第一波叛变特工！原来当年大黄蜂并未死透，被基纳麾下的叛变特工<strong>“白蚁（Termite）”</strong>用修复陷阱从鬼门关救了回来。对基纳死心塌地的大黄蜂在基纳“死”后接过衣钵，率领副官<strong>白蚁（Termite）</strong>、<strong>露娜（Luna）</strong>、<strong>猎人（Huntsman）</strong>与<strong>泰坦（Titan）</strong>占领潮汐盆地，架设大型“日蚀”毒气雾化装置，最终被玩家二次击杀。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联赛季：第2赛季《基纳的遗产 (Keener's Legacy)》</span>
+                  <span>解锁技能：维修陷阱 (Repair Trap)</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">“炉管”扎卡里·比蒂 (Zachary "Stovepipe" Beattie)</div>
+                    <div class="char-role">第11赛季《烈焰统治》主目标 / 无人机工程专家</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 遭黑色獠牙灭口</span>
+                </div>
+                <div class="char-story">
+                  原本被黑色獠牙指挥官巴顿·谢弗招募的叛变特工。在谢弗于科尼岛被猎人重伤昏迷后，“炉管”察觉到娜塔莉亚·索科洛娃与猎人正在清洗谢弗的旧部。他试图在科尼岛与玩家特工取得联系并揭露黑色獠牙突袭白宫的计划，但当玩家赶到科尼岛弹珠台房间时，“炉管”已被黑色獠牙先行一步残忍虐杀，并留下了关键语音警告。
+                </div>
+                <div class="char-meta-footer">
+                  <span>关联赛季：Y4 第11赛季《烈焰统治 (Reign of Fire)》</span>
+                  <span>决战机制：科尼岛狂暴机械战狗集群战</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="audio-log anna-log">
+            <div class="audio-log-header">▶ ANNA 加密频道录音 // 刘菲留给艾拉妮·凯尔索的遗言</div>
+            <div class="audio-log-quote">
+              “凯尔索，如果你听到这段录音，说明我已经死了，而安德鲁·艾利斯也已经下地狱了。我知道曼尼和罗德斯会恨我一辈子，这没关系……总得有人弄脏双手去剪断木偶的提线。小心麦克马努斯，小心你手腕上的那块表。”
+            </div>
+            <div class="audio-log-source">—— 刘菲 (Faye Lau)，白橡木营地行动前夕</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ====================================================================
+           CHAPTER V: THE HUNTERS, MCMANUS & HIDDEN UNDERGROUND FACTIONS
+           ==================================================================== -->
+      <div class="chapter-banner" data-category="shadow">
+        <div class="chapter-title-wrap">
+          <span class="chapter-code">CHAPTER 05 // COVERT EXECUTIONERS & SUBTERRANEAN HORRORS</span>
+          <h2 class="chapter-title">猎人计划（The Hunters）、国土安全部黑幕与地下隐藏派系</h2>
+        </div>
+      </div>
+
+      <!-- 14. The Hunters & Calvin McManus -->
+      <article class="faction-dossier" id="faction-hunters" data-category="shadow" style="--faction-color: var(--isac-cyan);">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2a8 8 0 0 0-8 8v4a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-4a8 8 0 0 0-8-8z"></path>
+                <circle cx="9" cy="10" r="1.5"></circle>
+                <circle cx="15" cy="10" r="1.5"></circle>
+                <line x1="8" y1="15" x2="16" y2="15"></line>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>猎人计划与国土安全部阴谋 <span class="faction-en-name">The Hunters & Secretary Calvin McManus</span></h3>
+              <div class="faction-motto">“当你的界面泛起雪花噪点，胸前挂满橙色手表的黑影已在你身后举起战斧”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>最高主脑：</strong>国土安全部长 卡尔文·麦克马努斯</span>
+            <span class="meta-pill"><strong>标志特征：</strong>弹道防弹面具、战斧处决、收集阵亡特工腕表</span>
+            <span class="meta-pill"><strong>权限级别：</strong>SHD底层后门最高覆盖权限</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>来历与终极真相：谁在猎杀国土战略局特工？</h4>
+            <div class="lore-text">
+              <p>
+                自初代《生存模式（Survival）》首次登场以来，<strong>猎人（The Hunters）</strong>就一直是《全境封锁》宇宙中最神秘、最令人胆寒的梦魇。他们全员身穿纯黑重型战术服，脸上佩戴着毫无人性感情的防弹面具（Ballistic Masks），战术背心上挂满了数十块从被他们亲手砍死的SHD特工手腕上割下来的<strong>橙色与红色战术腕表</strong>。在战斗中，猎人不仅拥有远超普通特工的护甲与机动性，更能在登场的瞬间释放<strong>高频EMP脉冲干扰玩家界面</strong>，甚至直接黑入（Hack）玩家特工扔出的自动机枪塔与追踪地雷，让玩家的技能反过来攻击自己，最后用一柄寒光凛冽的战术战斧（Hunter's Hatchet）将倒地的特工一斧枭首！
+              </p>
+              <p>
+                在长达数年的时间里，玩家社区曾猜测猎人是俄罗斯特种部队或神秘第三波特工。直到《全境封锁2》第3赛季、第9至第11赛季以及第5年《傀儡师（Puppeteers）》赛季，猎人的真实来历终于彻底揭晓：<strong>猎人计划（The Hunter Program）是由美国国土安全部长卡尔文·麦克马努斯（Calvin McManus）亲自建立并直辖的绝密“内部清道夫（Cleanup Crew）”部队！</strong>
+              </p>
+              <p>
+                麦克马努斯作为参与设计《第51号总统指令》与SHD体系的最高层政客，从一开始就极度冷酷地认为：“一群拥有无限自由裁量权且不受监管的SHD特工，迟早会失控或威胁到我们高层的利益。”因此，他在批准建立SHD的同时，秘密组建了专门用来监视、猎杀和抹除SHD特工的影子部队——<strong>猎人</strong>，并通过与奥尔蒂斯机器人公司（Ortiz Robotics）的合作，在所有SHD特工的ISAC系统底层预留了硬件后门（这就是为什么猎人能随时随地瘫痪并夺取SHD特工的技能设备！）。
+              </p>
+              <p>
+                在疫情爆发后，麦克马努斯更是与黑色獠牙最高统帅<strong>娜塔莉亚·索科洛娃（Natalya Sokolova）</strong>达成了秘密政治同盟。猎人的任务不再仅仅是处决像亚伦·基纳那样的叛变特工，而是<strong>无差别抹杀任何查到麦克马努斯与黑色獠牙勾结真相的忠诚SHD特工</strong>（例如在科尼岛袭击巴顿·谢弗、在白宫与巴克斯特庄园猎杀玩家特工）！
+              </p>
+            </div>
+          </div>
+
+          <div class="lore-block">
+            <h4>猎人计划与幕后阴谋核心人物档案</h4>
+            <div class="char-grid">
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">卡尔文·麦克马努斯 (Calvin McManus)</div>
+                    <div class="char-role">美国国土安全部长 / 猎人计划缔造者与最高主脑</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 终极幕后黑手</span>
+                </div>
+                <div class="char-story">
+                  全境封锁宇宙深层政府（Deep State）阴谋的终极代表。作为联邦总统继任顺位中的高官与国土安全部掌舵人，他将整个国家灾难视为重塑权力结构的契机。他一边利用猎人部队清除不听话的SHD特工，一边与索科洛娃合作企图利用自动化机械军团与奥尔蒂斯AI完全取代国土战略局。
+                </div>
+                <div class="char-meta-footer">
+                  <span>头衔：Secretary of Homeland Security</span>
+                  <span>手牌：猎人处决队、ISAC底层后门权限</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">“招募官”布莱恩·约翰逊 (The Recruiter - Brian Johnson)</div>
+                    <div class="char-role">猎人外勤总指挥 / 前第一波传奇SHD特工</div>
+                  </div>
+                  <span class="status-badge status-kia">KIA 巴克斯特庄园阵亡</span>
+                </div>
+                <div class="char-story">
+                  <strong>全系列最令人唏嘘的人物反转！</strong>布莱恩·约翰逊正是《全境封锁2》真人宣传片、官方衍生小说《破碎黎明（Broken Dawn）》及游戏内微缩模型雕像的<strong>第一男主角</strong>！他曾是一名正直的巴尔的摩警察，被激活为SHD特工后一路护送阿普尔·凯勒赫（April Kelleher）前往华盛顿。然而在目睹无数特工叛变与体制崩塌后，麦克马努斯找到了迷茫的布莱恩，用“只有你能帮我清理门户、挽救国家免于全面内战”的谎言将他策反，任命他为猎人部队的头号精锐与人才物色官——代号<strong>“招募官（The Recruiter）”</strong>。在第5年《傀儡师》赛季终局战中，布莱恩在巴克斯特庄园（Campamiento / Meret Estate）以压倒性的猎人战力与玩家激战，最终在防空系统崩溃后的迫击炮轰炸中悲壮身亡。
+                </div>
+                <div class="char-meta-footer">
+                  <span>登场：Y5S2《傀儡师》终极Boss / 官方小说主角</span>
+                  <span>身份：被麦克马努斯洗脑利用的正直特工</span>
+                </div>
+              </div>
+
+              <div class="char-card">
+                <div class="char-top">
+                  <div>
+                    <div class="char-name">“欺瞒” (Deceit) & 25+名隐藏面具猎人</div>
+                    <div class="char-role">特区、纽约与布鲁克林潜伏猎人小队</div>
+                  </div>
+                  <span class="status-badge status-active">ACTIVE 暗中潜伏</span>
+                </div>
+                <div class="char-story">
+                  除了剧情主线登场的猎人“欺瞒（Deceit，科尼岛与追捕任务登场）”外，在华盛顿特区、曼哈顿下城以及布鲁克林的各个角落，还潜伏着<strong>恶魔（Demon）、亡魂（Wraith）、绯红（Crimson）、食尸鬼（Ghoul）、幽灵（Ghost）、迈达斯（Midas）、死神（Death）、狂欢（Cross）、幻影（Phantom）</strong>等超过25名加密猎人。每当玩家靠近他们隐藏的监控点时，界面就会出现轻微的雪花静电干扰；唯有解开复杂的城市谜题，才能将他们引出并夺取其标志性的防弹面具。
+                </div>
+                <div class="char-meta-footer">
+                  <span>战利品：华盛顿12面具 / 纽约13面具 / 布鲁克林猎人面具</span>
+                  <span>战术威胁：全游戏最高单体AI强度</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 15. The Underground (Ambushers) & Rioters (Trash Ninjas) -->
+      <article class="faction-dossier" id="faction-underground" data-category="shadow" style="--faction-color: #94a3b8;">
+        <div class="faction-header">
+          <div class="faction-identity">
+            <div class="faction-emblem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </div>
+            <div class="faction-title-group">
+              <h3>地下世界（伏击者）与街头暴徒（垃圾忍者） <span class="faction-en-name">The Underground (Ambushers) & Trash Ninjas</span></h3>
+              <div class="faction-motto">“没有口号，没有无线电，只有下水道黑暗中突然响起的电锯轰鸣与破空飞刀”</div>
+            </div>
+          </div>
+          <div class="faction-meta-pills">
+            <span class="meta-pill"><strong>出没区域：</strong>华盛顿地下管网、下水道、午夜街头暗巷</span>
+            <span class="meta-pill"><strong>恐怖特征：</strong>全程绝对静音作战、涂毒飞刀、重甲电锯狂人</span>
+          </div>
+        </div>
+
+        <div class="faction-body">
+          <div class="lore-block">
+            <h4>起源与生态：潜伏在城市排污管网中的无声掠食者</h4>
+            <div class="lore-text">
+              <p>
+                除了五大明面上的敌对主力外，华盛顿特区的阴暗角落里还存在着两个令特工极度不安的特殊隐藏派系：<strong>地下世界/伏击者（The Underground / Ambushers）</strong>与<strong>街头拾荒暴徒（Rioters / 玩家俗称“垃圾忍者 Trash Ninjas”）</strong>。
+              </p>
+              <p>
+                <strong>1. 地下世界 / 伏击者（The Underground）：</strong>当玩家深入华盛顿特区错综复杂的地下排水隧道寻找钥匙箱，或是在大雾弥漫的午夜街头巡逻时，往往会在毫无无线电预警的情况下遭到他们的致命突袭。这群人全身裹着破烂的黑色雨衣、锁子甲与绿色发光夜视仪，<strong>在整场战斗中绝不发出一句喊叫或语音（除了沉重的呼吸声与锁链哗啦声）</strong>。他们不使用常规扩音通讯，而是依靠手势在黑暗中协同包抄，向特工投掷淬有剧毒的无声飞刀；而他们最令人头皮发麻的王牌单位，则是身高两米、头戴焊工面罩、手持轰鸣作响的<strong>重型伐木油锯（Chainsaw Heavy）</strong>的下水道屠夫！在狭窄幽暗的下水道转角撞见电锯哥，是所有《全境封锁2》玩家的共同心理阴影。
+              </p>
+              <p>
+                <strong>2. 街头暴徒 / 垃圾忍者（Rioters / Trash Ninjas）：</strong>不属于任何大派系的底层流氓团伙。他们因用<strong>金属垃圾桶盖（Trash Can Lids）</strong>充当简易防暴盾牌、手持复合弓与改装小口径冲锋枪鬼鬼祟祟地在街头伏击路人，被玩家戏称为“垃圾忍者”。他们代表了灾难发生后拒绝加入聚落、也未被大帮派吞并的底层无序暴力。
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ====================================================================
+           CHAPTER VI: CHRONOLOGICAL LORE TIMELINE
+           ==================================================================== -->
+      <div class="chapter-banner" id="section-timeline" data-category="timeline">
+        <div class="chapter-title-wrap">
+          <span class="chapter-code">CHAPTER 06 // MASTER CHRONOLOGY & CONSPIRACY TIMELINE</span>
+          <h2 class="chapter-title">《全境封锁》宇宙完整编年史：从黑色星期五到布鲁克林之战</h2>
+        </div>
+      </div>
+
+      <section class="faction-dossier" data-category="timeline" style="--faction-color: var(--blacktusk-gold);">
+        <div class="faction-body">
+          <div class="timeline-container">
+            <div class="timeline-node">
+              <div class="timeline-date">STAGE 01 // 疫情爆发前夕 & 黑色星期五 (Month 0)</div>
+              <div class="timeline-title">第51号总统指令签署与“绿毒”黑色星期五爆发</div>
+              <div class="timeline-desc">
+                基于“暗冬行动”推演，美国政府签署《第51号总统指令》秘密组建国土战略局（SHD）。与此同时，国土安全部长卡尔文·麦克马努斯通过奥尔蒂斯机器人公司在ISAC系统植入后门并秘密筹建“猎人计划”。数年后的“黑色星期五”购物季，极端生态恐怖分子戈登·阿姆赫斯特博士将人造天花变种病毒涂抹在纸币上于纽约流通，“美元流感（绿毒）”全面爆发。
+              </div>
+            </div>
+
+            <div class="timeline-node">
+              <div class="timeline-date">STAGE 02 // 疫情爆发第1-2个月 (初代《全境封锁》纽约寒冬)</div>
+              <div class="timeline-title">暗区背叛、第一波特工崩溃与亚伦·基纳崛起</div>
+              <div class="timeline-desc">
+                第一波SHD特工奉命进入曼哈顿中央公园与暗区，随后JTF因防线崩溃强行封锁暗区撤离，导致大批第一波特工与平民惨死。亚伦·基纳彻底看穿体制虚伪，率领大批第一波特工叛变并与LMB查尔斯·布利斯中校合作。第二波特工与刘菲、罗伊·贝尼特斯、保罗·罗德斯、坎德尔博士并肩作战，先后击毙净化者首领乔·费罗、赖克斯帮首领拉雷·巴雷特与LMB统帅布利斯，但基纳成功携病毒打印机潜逃。
+              </div>
+            </div>
+
+            <div class="timeline-node">
+              <div class="timeline-date">STAGE 03 // 疫情爆发第3-6个月 (华盛顿特区的沦陷与分裂)</div>
+              <div class="timeline-title">罗斯福岛隔离惨案、瑞奇微兵变与总统暗杀阴谋</div>
+              <div class="timeline-desc">
+                JTF指挥官安东·瑞奇微采取铁腕封锁，将罗斯福岛隔离营变成死亡炼狱，逼出了以无症状携带者艾米琳·肖为首的狂热复仇派系“流亡者”。瑞奇微因私自处决军官被捕，其狂热部下劫狱发动兵变，成立军国主义集团“真实之子”并血洗城堡聚落。与此同时，沃勒总统病逝，继任总统门德斯因拒绝向寡头妥协被特勤局暗杀，傀儡议长安德鲁·艾利斯顺位继任总统。
+              </div>
+            </div>
+
+            <div class="timeline-node">
+              <div class="timeline-date">STAGE 04 // 疫情爆发第7个月 (《全境封锁2》本体主线战役)</div>
+              <div class="timeline-title">特区解放战与黑色獠牙全面入侵</div>
+              <div class="timeline-desc">
+                SHD全国网络中断，玩家特工（警长）抵达华盛顿白宫，协助曼尼·奥尔特加与凯尔索支援戏院、校区聚落，先后攻破区域联盟体育馆（覆灭鬣狗议会）、罗斯福岛与国家动物园（击毙流亡者领袖艾米琳·肖）、国会大厦（击毙真实之子领袖瑞奇微将军）。就在特区即将光复之际，艾利斯总统叛逃，娜塔莉亚·索科洛娃与巴顿·谢弗统领的“黑色獠牙（Black Tusk）”全面入侵特区，玩家随后攻克潮汐盆地击毙指挥官“双足飞龙”，并在八人掠夺战中挫败国家机场与联合钢铁厂阴谋。
+              </div>
+            </div>
+
+            <div class="timeline-node">
+              <div class="timeline-date">STAGE 05 // 疫情爆发第8个月 (《纽约军阀 Warlords of New York》DLC)</div>
+              <div class="timeline-title">曼哈顿下城猎杀四大军阀与自由岛“假死”迷局</div>
+              <div class="timeline-desc">
+                亚伦·基纳使用“日蚀”生化导弹摧毁纽约市政厅JTF总部。玩家特工与凯尔索南下曼哈顿避风港，协助保罗·罗德斯与贝尼特斯，逐一猎杀基纳麾下四大叛变军阀：薇薇安·康利（净化者）、詹姆斯·德拉戈夫（赖克斯帮）、哈维尔·卡吉卡与西奥·帕内尔。最终在自由岛击败基纳——然而基纳与帕内尔实则利用全息欺骗与假死技术瞒天过海，转入地下运作ANNA系统。同时，刘菲在目睹妹妹惨死与政府腐败后，枪杀贝尼特斯作为投名状潜入黑色獠牙。
+              </div>
+            </div>
+
+            <div class="timeline-node">
+              <div class="timeline-date">STAGE 06 // 第1至第4赛季 & 第9至第11赛季 (暗流涌动的权力洗牌)</div>
+              <div class="timeline-title">刘菲刺杀叛国总统、谢弗昏迷与“黑獠牙-真实之子-猎人”合流</div>
+              <div class="timeline-desc">
+                玩家先后击败叛变特工“木星”与“大黄蜂”。第3赛季科尼岛行动中，猎人首领“招募官”重伤巴顿·谢弗使其昏迷被俘。第4赛季白橡木营地中，刘菲亲手击毙叛国总统安德鲁·艾利斯后死于玩家枪下，留下揭露高层的加密录音。第9至11赛季，真实之子良知派刘易斯上尉被黑色獠牙灭口，安德森将军率真实之子残部正式投靠娜塔莉亚·索科洛娃，而国土安全部长麦克马努斯则与索科洛娃公开合流。
+              </div>
+            </div>
+
+            <div class="timeline-node">
+              <div class="timeline-date">STAGE 07 // 第5年至第6年赛季 (折翼、傀儡师、先锋与第一名叛变者)</div>
+              <div class="timeline-title">猎人“招募官”陨落、基纳帕内尔现身与凯尔索的抉择</div>
+              <div class="timeline-desc">
+                玩家从黑色獠牙手中救回曼尼之妻玛丽·辛格，并在巴克斯特庄园击败猎人指挥官“招募官（布莱恩·约翰逊）”。在纽约避风港，艾拉妮·凯尔索发现了活着的亚伦·基纳与西奥·帕内尔，得知ISAC系统已被麦克马努斯监控；为了从暗处保护白宫，凯尔索主动切换至ANNA系统成为“战略性叛变特工”。随后，基纳主动进入白宫拘留室与玩家特工达成史无前例的暗中同盟。
+              </div>
+            </div>
+
+            <div class="timeline-node">
+              <div class="timeline-date">STAGE 08 // 《布鲁克林之战 Battle for Brooklyn》DLC</div>
+              <div class="timeline-title">腐蚀“紫火”跨河入侵与布鲁克林大桥聚落保卫战</div>
+              <div class="timeline-desc">
+                在《纽约军阀》事件数月后，由西奥·帕内尔协助建立的布鲁克林大桥聚落（Bridge Settlement）遭到两路夹击：指挥官贾辛斯基率领净化者携最新研发的装甲腐蚀性“紫火（Purple Flame）”及改装战狗“紫罗兰”在H5炼油厂发难；同时，由善良平民黑化而成的赖克斯帮女头目“鼠后”莎拉·莫雷蒂（The Rat Queen）与丹佛斯趁乱盘踞艺术博物馆猛攻聚落。玩家特工响应梅兰妮·霍斯金斯求救重返布鲁克林，与前医疗主管杰西卡·坎德尔博士及帕内尔携手平定东河彼岸的危机。
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Floating Mobile Quick-Access Pill -->
+  <div class="mobile-fab-bar">
+    <button class="fab-btn" id="fabTopBtn" type="button" title="回到顶部">↑ 顶部</button>
+    <button class="fab-btn fab-btn-primary" id="fabTocBtn" type="button" title="打开快速章节目录">📑 派系目录</button>
+  </div>
+
+  <footer class="shd-footer">
+    <div>SHD // STRATEGIC HOMELAND DIVISION TACTICAL ARCHIVE TERMINAL // DIRECTIVE 51</div>
+    <div style="margin-top: 0.35rem;">完整收录《全境封锁2》本体 · 《纽约军阀》 · 《布鲁克林之战》 · 第1-6年赛季追捕全设定</div>
+  </footer>
+
+  <!-- ========================================================================
+       INTERACTIVE TERMINAL SCRIPT (SEARCH, FILTER, THEME, SYSTEM & MOBILE DRAWERS)
+       ======================================================================== -->
+  <script>
+    (function () {
+      const htmlEl = document.documentElement;
+      const toggleThemeBtn = document.getElementById('toggleThemeBtn');
+      const toggleSystemBtn = document.getElementById('toggleSystemBtn');
+      const toggleFontBtn = document.getElementById('toggleFontBtn');
+      const systemStatusText = document.getElementById('systemStatusText');
+      const filterTabs = document.querySelectorAll('#factionFilterTabs .filter-tab');
+      const searchableItems = document.querySelectorAll('#loreStream .faction-dossier, #loreStream .chapter-banner');
+      const searchInput = document.getElementById('loreSearchInput');
+      const tocLinks = document.querySelectorAll('.toc-link');
+
+      // Mobile Navigation Elements
+      const mobileToolsBtn = document.getElementById('mobileToolsBtn');
+      const mobileTocBtn = document.getElementById('mobileTocBtn');
+      const fabTocBtn = document.getElementById('fabTocBtn');
+      const fabTopBtn = document.getElementById('fabTopBtn');
+      const closeTocBtn = document.getElementById('closeTocBtn');
+      const tocSidebar = document.getElementById('tocSidebar');
+      const tocBackdrop = document.getElementById('tocBackdrop');
+      const hudControlsPanel = document.getElementById('hudControlsPanel');
+
+      // Mobile TOC Drawer Open/Close Helpers
+      function openTocDrawer() {
+        tocSidebar.classList.add('open');
+        tocBackdrop.classList.add('open');
+      }
+
+      function closeTocDrawer() {
+        tocSidebar.classList.remove('open');
+        tocBackdrop.classList.remove('open');
+      }
+
+      if (mobileTocBtn) mobileTocBtn.addEventListener('click', openTocDrawer);
+      if (fabTocBtn) fabTocBtn.addEventListener('click', openTocDrawer);
+      if (closeTocBtn) closeTocBtn.addEventListener('click', closeTocDrawer);
+      if (tocBackdrop) tocBackdrop.addEventListener('click', closeTocDrawer);
+
+      // Mobile Settings/Search Panel Toggle
+      if (mobileToolsBtn && hudControlsPanel) {
+        mobileToolsBtn.addEventListener('click', () => {
+          const isOpen = hudControlsPanel.classList.toggle('mobile-open');
+          mobileToolsBtn.classList.toggle('active', isOpen);
+          if (isOpen && searchInput) {
+            setTimeout(() => searchInput.focus(), 80);
+          }
+        });
+      }
+
+      // Back to Top Button
+      if (fabTopBtn) {
+        fabTopBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Close TOC drawer automatically when a link is tapped on mobile/tablet
+      tocLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          closeTocDrawer();
+          if (hudControlsPanel) {
+            hudControlsPanel.classList.remove('mobile-open');
+          }
+          if (mobileToolsBtn) {
+            mobileToolsBtn.classList.remove('active');
+          }
+        });
+      });
+
+      // 1. Theme Toggle (Dark Tactical vs. High-Contrast Daylight)
+      toggleThemeBtn.addEventListener('click', () => {
+        const current = htmlEl.getAttribute('data-theme');
+        if (current === 'dark') {
+          htmlEl.setAttribute('data-theme', 'light');
+          toggleThemeBtn.innerHTML = '<span>🌙 暗黑终端</span>';
+        } else {
+          htmlEl.setAttribute('data-theme', 'dark');
+          toggleThemeBtn.innerHTML = '<span>☀️ 昼间模式</span>';
+        }
+      });
+
+      // 2. System Protocol Toggle (ISAC Orange vs. ANNA Rogue Red)
+      toggleSystemBtn.addEventListener('click', () => {
+        const current = htmlEl.getAttribute('data-system');
+        if (current === 'isac') {
+          htmlEl.setAttribute('data-system', 'anna');
+          toggleSystemBtn.innerHTML = '<span>⚠️ 协议：ANNA 红</span>';
+          toggleSystemBtn.classList.add('active');
+          systemStatusText.textContent = 'ANNA // ROGUE NETWORK OVERRIDE // ORTIZ PROTOCOL ACTIVE';
+        } else {
+          htmlEl.setAttribute('data-system', 'isac');
+          toggleSystemBtn.innerHTML = '<span>⚡ 协议：ISAC 橙</span>';
+          toggleSystemBtn.classList.remove('active');
+          systemStatusText.textContent = 'ISAC // STRATEGIC HOMELAND DIVISION // DIRECTIVE 51';
+        }
+      });
+
+      // 3. Font Size Preset Cycling (Normal -> Comfortable -> Large)
+      const fontModes = [
+        { key: 'normal', label: '🔠 字号：标准' },
+        { key: 'comfortable', label: '🔠 字号：舒适' },
+        { key: 'large', label: '🔠 字号：大字' }
+      ];
+      let fontIdx = 0;
+      toggleFontBtn.addEventListener('click', () => {
+        fontIdx = (fontIdx + 1) % fontModes.length;
+        htmlEl.setAttribute('data-fontsize', fontModes[fontIdx].key);
+        toggleFontBtn.innerHTML = '<span>' + fontModes[fontIdx].label + '</span>';
+      });
+
+      // 4. Category Filter Tabs
+      let activeCategory = 'all';
+      function applyFilters() {
+        const query = searchInput.value.trim().toLowerCase();
+        searchableItems.forEach(el => {
+          const cat = el.getAttribute('data-category');
+          const categoryMatch = (activeCategory === 'all') || (cat === activeCategory);
+          const textMatch = !query || el.textContent.toLowerCase().includes(query);
+
+          if (categoryMatch && textMatch) {
+            el.classList.remove('hidden-by-filter');
+          } else {
+            el.classList.add('hidden-by-filter');
+          }
+        });
+      }
+
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          filterTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          activeCategory = tab.getAttribute('data-filter');
+          applyFilters();
+          tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        });
+      });
+
+      // 5. Instant Search Filter
+      searchInput.addEventListener('input', () => {
+        applyFilters();
+      });
+
+      // 6. Scroll-Spy for Sidebar TOC
+      const articles = document.querySelectorAll('.faction-dossier[id], .chapter-banner[id]');
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('id');
+              tocLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+              });
+            }
+          });
+        },
+        { rootMargin: '-12% 0px -72% 0px', threshold: 0.05 }
+      );
+
+      articles.forEach(article => observer.observe(article));
+    })();
+  </script>
+</body>
+</html>
